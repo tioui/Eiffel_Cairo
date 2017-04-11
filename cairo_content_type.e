@@ -8,10 +8,7 @@ class
 	CAIRO_CONTENT_TYPE
 
 inherit
-	CAIRO_ANY
-		redefine
-			is_equal
-		end
+	CAIRO_INTERNAL_ENUM
 
 create {CAIRO_ANY}
 	make
@@ -22,14 +19,6 @@ create
 	make_color_and_alpha
 
 feature {NONE} -- Iniialization
-
-	make(a_item:INTEGER)
-			-- Initialization of `Current' using `a_item' as `item'
-		do
-			item := a_item
-		ensure
-			Is_Assign: item ~ a_item
-		end
 
 	make_color_only
 		do
@@ -71,17 +60,4 @@ feature -- Access
 		do
 			Result := item ~ {CAIRO_EXTERNALS}.CAIRO_CONTENT_COLOR_ALPHA
 		end
-
-feature -- Comparison
-
-	is_equal (a_other: like Current): BOOLEAN
-			-- <Precursor>
-		do
-			Result := item ~ a_other.item
-		end
-
-feature {CAIRO_ANY} -- Implementation
-
-	item:INTEGER
-			-- Internal representation of `Current'
 end

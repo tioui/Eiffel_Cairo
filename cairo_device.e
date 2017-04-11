@@ -11,8 +11,18 @@ class
 	CAIRO_DEVICE
 
 inherit
+	CAIRO_INTERNAL_MEMORY_POINTER
+		redefine
+			make
+		end
 	CAIRO_DEVICE_ERROR
+		undefine
+			is_equal
+		end
 	DISPOSABLE
+		undefine
+			is_equal
+		end
 
 create {CAIRO_ANY}
 	make
@@ -20,17 +30,14 @@ create {CAIRO_ANY}
 feature {NONE} -- Initialization
 
 	make(a_item:POINTER)
-			-- Initialization of `Current' using `a_item' as `type_index'
-		require
-			Not_Null: not a_item.is_default_pointer
+			-- Initialization of `Current' using `a_item' as `item'
 		do
 			item := {CAIRO_EXTERNALS}.cairo_device_reference(a_item)
 			type_index := {CAIRO_EXTERNALS}.CAIRO_DEVICE_TYPE_INVALID
-			if exists then
-				error_code := {CAIRO_EXTERNALS}.cairo_device_status(item)
-				if is_success then
-					type_index := {CAIRO_EXTERNALS}.cairo_device_get_type(item)
-				end
+			error_code := {CAIRO_EXTERNALS}.cairo_device_status(item)
+			is_valid := is_success
+			if is_success then
+				type_index := {CAIRO_EXTERNALS}.cairo_device_get_type(item)
 			end
 		end
 
@@ -41,7 +48,6 @@ feature -- Access
 			-- any temporary modifications cairo has made to `Current''s state.
 			-- This feature may `acquire' `Current'.
 		require
-			Exists:exists
 			Is_valid: not is_type_valid
 		do
 			{CAIRO_EXTERNALS}.cairo_device_flush(item)
@@ -69,11 +75,6 @@ feature -- Access
 		end
 
 feature -- Status report
-
-	exists:BOOLEAN
-		do
-			Result := not item.is_default_pointer
-		end
 
 	is_type_drm:BOOLEAN
 			-- Is `Current' of type 'Direct Render Manager' (DRM)
@@ -131,19 +132,15 @@ feature -- Status report
 
 feature {CAIRO_ANY} -- Implementation
 
-	item:POINTER
-			-- Internal representation of `Current'
-
 	type_index:INTEGER
+			-- The type of `Current'
 
 feature{NONE} -- Implementation
 
 	dispose
 			-- <Precursor>
 		do
-			if exists then
-				{CAIRO_EXTERNALS}.cairo_device_destroy(item)
-			end
+			{CAIRO_EXTERNALS}.cairo_device_destroy(item)
 		end
 
 end

@@ -8,8 +8,18 @@ class
 	CAIRO_FONT_FACE
 
 inherit
+	CAIRO_INTERNAL_MEMORY_POINTER
+		redefine
+			make
+		end
 	CAIRO_NO_MEMORY_ERROR
+		undefine
+			is_equal
+		end
 	DISPOSABLE
+		undefine
+			is_equal
+		end
 
 create {CAIRO_ANY}
 	make
@@ -17,25 +27,18 @@ create {CAIRO_ANY}
 feature {NONE} -- Initialization
 
 	make(a_item:POINTER)
-			-- Initialization of `Current' using `a_item' as `item'
-		require
-			Item_Not_Null: not a_item.is_default_pointer
+			-- <Precursor>
 		do
 			item := {CAIRO_EXTERNALS}.cairo_font_face_reference(a_item)
 			error_code := {CAIRO_EXTERNALS}.cairo_font_face_status(a_item)
+			is_valid := is_success
 			if is_success then
-				is_valid := True
 				type_index := {CAIRO_EXTERNALS}.cairo_font_face_get_type(a_item)
-			else
-				is_valid := False
 			end
 
 		end
 
 feature -- Status report
-
-	is_valid:BOOLEAN
-			-- `Current' has been correctly created
 
 	is_toy_font:BOOLEAN
 			-- The type of `Current' is Cairo's toy font
@@ -76,11 +79,6 @@ feature -- Status report
 		do
 			Result := type_index = {CAIRO_EXTERNALS}.CAIRO_FONT_TYPE_USER
 		end
-
-feature {NONE} -- Implementation
-
-	item:POINTER
-			-- {POINTER} to the internal representation of `Current'
 
 feature {NONE} -- Implementation
 

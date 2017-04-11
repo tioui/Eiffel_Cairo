@@ -548,6 +548,468 @@ feature -- Functions
 			"cairo_push_group_with_content"
 		end
 
+	frozen cairo_pop_group(a_cr:POINTER) : POINTER
+		external
+			"C (cairo_t *) : cairo_pattern_t * | <cairo.h>"
+		alias
+			"cairo_pop_group"
+		end
+
+	frozen cairo_pop_group_to_source(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_pop_group_to_source"
+		end
+
+	frozen cairo_get_group_target(a_cr:POINTER):POINTER
+		external
+			"C (cairo_t *) : cairo_surface_t * | <cairo.h>"
+		alias
+			"cairo_get_group_target"
+		end
+
+	frozen cairo_set_source_rgb(a_cr:POINTER; a_red, a_green, a_blue:REAL_64)
+		external
+			"C (cairo_t *, double, double, double) | <cairo.h>"
+		alias
+			"cairo_set_source_rgb"
+		end
+
+	frozen cairo_set_source_rgba(a_cr:POINTER; a_red, a_green, a_blue, a_alpha:REAL_64)
+		external
+			"C (cairo_t *, double, double, double, double) | <cairo.h>"
+		alias
+			"cairo_set_source_rgba"
+		end
+
+	frozen cairo_set_source(a_cr, a_source:POINTER)
+		external
+			"C (cairo_t *, cairo_pattern_t *) | <cairo.h>"
+		alias
+			"cairo_set_source"
+		end
+
+	frozen cairo_set_source_surface(a_cr, a_surface:POINTER; a_x, a_y:REAL_64)
+		external
+			"C (cairo_t *, cairo_surface_t *, double, double) | <cairo.h>"
+		alias
+			"cairo_set_source_surface"
+		end
+
+	frozen cairo_get_source(a_cr:POINTER):POINTER
+		external
+			"C (cairo_t *) : cairo_pattern_t * | <cairo.h>"
+		alias
+			"cairo_get_source"
+		end
+
+	frozen cairo_set_antialias(a_cr:POINTER; a_antialias:INTEGER)
+		external
+			"C (cairo_t *, int) | <cairo.h>"
+		alias
+			"cairo_set_antialias"
+		end
+
+	frozen cairo_get_antialias(a_cr:POINTER):INTEGER
+		external
+			"C (cairo_t *) : int | <cairo.h>"
+		alias
+			"cairo_get_antialias"
+		end
+
+	frozen cairo_set_dash(a_cr, a_dashes:POINTER; a_num_dashes:INTEGER; a_offset:REAL_64)
+		external
+			"C (cairo_t *, const double *, int, double) | <cairo.h>"
+		alias
+			"cairo_set_dash"
+		end
+
+	frozen cairo_get_dash_count(a_cr:POINTER):INTEGER
+		external
+			"C (cairo_t *) : int | <cairo.h>"
+		alias
+			"cairo_get_dash_count"
+		end
+
+	frozen cairo_get_dash(a_cr, a_dashes, a_offset:POINTER)
+		external
+			"C (cairo_t *, double *, double *) | <cairo.h>"
+		alias
+			"cairo_get_dash"
+		end
+
+	frozen cairo_set_fill_rule(a_cr:POINTER; a_fill_rule:INTEGER)
+		external
+			"C (cairo_t *, cairo_fill_rule_t) | <cairo.h>"
+		alias
+			"cairo_set_fill_rule"
+		end
+
+	frozen cairo_get_fill_rule(a_cr:POINTER):INTEGER
+		external
+			"C (cairo_t *) : cairo_fill_rule_t | <cairo.h>"
+		alias
+			"cairo_get_fill_rule"
+		end
+
+	frozen cairo_set_line_cap(a_cr:POINTER; a_line_cap:INTEGER)
+		external
+			"C (cairo_t *, cairo_line_cap_t) | <cairo.h>"
+		alias
+			"cairo_set_line_cap"
+		end
+
+	frozen cairo_get_line_cap(a_cr:POINTER):INTEGER
+		external
+			"C (cairo_t *) : cairo_line_cap_t | <cairo.h>"
+		alias
+			"cairo_get_line_cap"
+		end
+
+	frozen cairo_set_line_join(a_cr:POINTER; a_line_join:INTEGER)
+		external
+			"C (cairo_t *, cairo_line_cap_t) | <cairo.h>"
+		alias
+			"cairo_set_line_join"
+		end
+
+	frozen cairo_get_line_join(a_cr:POINTER) :INTEGER
+		external
+			"C (cairo_t *) : cairo_line_cap_t | <cairo.h>"
+		alias
+			"cairo_get_line_join"
+		end
+
+	frozen cairo_set_line_width(a_cr:POINTER; a_width:REAL_64)
+		external
+			"C (cairo_t *, double) | <cairo.h>"
+		alias
+			"cairo_set_line_width"
+		end
+
+	frozen cairo_get_line_width(a_cr:POINTER):REAL_64
+		external
+			"C (cairo_t *) : double | <cairo.h>"
+		alias
+			"cairo_get_line_width"
+		end
+
+	frozen cairo_set_miter_limit(a_cr:POINTER; a_limit:REAL_64)
+		external
+			"C (cairo_t *, double) | <cairo.h>"
+		alias
+			"cairo_set_miter_limit"
+		end
+
+	frozen cairo_get_miter_limit(a_cr:POINTER):REAL_64
+		external
+			"C (cairo_t *) : double | <cairo.h>"
+		alias
+			"cairo_get_miter_limit"
+		end
+
+	frozen cairo_set_operator(a_cr:POINTER; a_op:INTEGER)
+		external
+			"C (cairo_t *, cairo_operator_t) | <cairo.h>"
+		alias
+			"cairo_set_operator"
+		end
+
+	frozen cairo_get_operator(a_cr:POINTER):INTEGER
+		external
+			"C (cairo_t *) : cairo_operator_t | <cairo.h>"
+		alias
+			"cairo_get_operator"
+		end
+
+	frozen cairo_set_tolerance(a_cr:POINTER; a_tolerance:REAL_64)
+		external
+			"C (cairo_t *, double) | <cairo.h>"
+		alias
+			"cairo_set_tolerance"
+		end
+
+	frozen cairo_get_tolerance(a_cr:POINTER):REAL_64
+		external
+			"C (cairo_t *) : double | <cairo.h>"
+		alias
+			"cairo_get_tolerance"
+		end
+
+	frozen cairo_clip(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_clip"
+		end
+
+	frozen cairo_clip_preserve(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_clip_preserve"
+		end
+
+	frozen cairo_clip_extents(a_cr, a_x1, a_y1, a_x2, a_y2:POINTER)
+		external
+			"C (cairo_t *, double *, double *, double *, double *) | <cairo.h>"
+		alias
+			"cairo_clip_extents"
+		end
+
+	frozen cairo_in_clip(a_cr:POINTER; a_x, a_y:REAL_64):BOOLEAN
+		external
+			"C (cairo_t *, double, double):cairo_bool_t | <cairo.h>"
+		alias
+			"cairo_in_clip"
+		end
+
+	frozen cairo_reset_clip(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_reset_clip"
+		end
+
+	frozen cairo_copy_clip_rectangle_list(a_cr:POINTER):POINTER
+		external
+			"C (cairo_t *) : cairo_rectangle_list_t * | <cairo.h>"
+		alias
+			"cairo_copy_clip_rectangle_list"
+		end
+
+	frozen cairo_fill(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_fill"
+		end
+
+	frozen cairo_fill_preserve(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_fill_preserve"
+		end
+
+	frozen cairo_fill_extents(a_cr, a_x1, a_y1, a_x2, a_y2:POINTER)
+		external
+			"C (cairo_t *, double *, double *, double *, double *) | <cairo.h>"
+		alias
+			"cairo_fill_extents"
+		end
+
+	frozen cairo_in_fill(a_cr:POINTER; a_x, a_y:REAL_64):BOOLEAN
+		external
+			"C (cairo_t *, double, double):cairo_bool_t | <cairo.h>"
+		alias
+			"cairo_in_fill"
+		end
+
+	frozen cairo_mask(a_cr, a_pattern:POINTER)
+		external
+			"C (cairo_t *, cairo_pattern_t *) | <cairo.h>"
+		alias
+			"cairo_mask"
+		end
+
+	frozen cairo_mask_surface(a_cr, a_surface:POINTER; a_surface_x, a_surface_y:REAL_64)
+		external
+			"C (cairo_t *, cairo_surface_t *, double, double) | <cairo.h>"
+		alias
+			"cairo_mask_surface"
+		end
+
+	frozen cairo_paint(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_paint"
+		end
+
+	frozen cairo_paint_with_alpha(a_cr:POINTER; a_alpha:REAL_64)
+		external
+			"C (cairo_t *, double) | <cairo.h>"
+		alias
+			"cairo_paint_with_alpha"
+		end
+
+	frozen cairo_stroke(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_stroke"
+		end
+
+	frozen cairo_stroke_preserve(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_stroke_preserve"
+		end
+
+	frozen cairo_stroke_extents(a_cr, a_x1, a_y1, a_x2, a_y2:POINTER)
+		external
+			"C (cairo_t *, double *, double *, double *, double *) | <cairo.h>"
+		alias
+			"cairo_stroke_extents"
+		end
+
+	frozen cairo_in_stroke(a_cr:POINTER; a_x, a_y:REAL_64):BOOLEAN
+		external
+			"C (cairo_t *, double, double):cairo_bool_t | <cairo.h>"
+		alias
+			"cairo_in_stroke"
+		end
+
+	frozen cairo_copy_path(a_cr:POINTER):POINTER
+		external
+			"C (cairo_t *):cairo_path_t * | <cairo.h>"
+		alias
+			"cairo_copy_path"
+		end
+
+	frozen cairo_copy_path_flat(a_cr:POINTER):POINTER
+		external
+			"C (cairo_t *):cairo_path_t * | <cairo.h>"
+		alias
+			"cairo_copy_path_flat"
+		end
+
+	frozen cairo_append_path(a_cr, a_path:POINTER)
+		external
+			"C (cairo_t *, const cairo_path_t *) | <cairo.h>"
+		alias
+			"cairo_append_path"
+		end
+
+	frozen cairo_has_current_point(a_cr:POINTER):BOOLEAN
+		external
+			"C (cairo_t *) : cairo_bool_t | <cairo.h>"
+		alias
+			"cairo_has_current_point"
+		end
+
+	frozen cairo_get_current_point(a_cr, a_x, a_y:POINTER)
+		external
+			"C (cairo_t *, double *, double *) | <cairo.h>"
+		alias
+			"cairo_get_current_point"
+		end
+
+	frozen cairo_new_path(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_new_path"
+		end
+
+	frozen cairo_new_sub_path(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_new_sub_path"
+		end
+
+	frozen cairo_close_path(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_close_path"
+		end
+
+	frozen cairo_arc(a_cr:POINTER; a_xc, a_yc, a_radius, a_angle1, a_angle2:REAL_64)
+		external
+			"C (cairo_t *, double, double, double, double, double) | <cairo.h>"
+		alias
+			"cairo_arc"
+		end
+
+	frozen cairo_arc_negative(a_cr:POINTER; a_xc, a_yc, a_radius, a_angle1, a_angle2:REAL_64)
+		external
+			"C (cairo_t *, double, double, double, double, double) | <cairo.h>"
+		alias
+			"cairo_arc_negative"
+		end
+
+	frozen cairo_curve_to(a_cr:POINTER; a_x1, a_y1, a_x2, a_y2, a_x3, a_y3:REAL_64)
+		external
+			"C (cairo_t *, double, double, double, double, double, double) | <cairo.h>"
+		alias
+			"cairo_curve_to"
+		end
+
+	frozen cairo_line_to(a_cr:POINTER; a_x, a_y:REAL_64)
+		external
+			"C (cairo_t *, double, double) | <cairo.h>"
+		alias
+			"cairo_line_to"
+		end
+
+	frozen cairo_move_to(a_cr:POINTER; a_x, a_y:REAL_64)
+		external
+			"C (cairo_t *, double, double) | <cairo.h>"
+		alias
+			"cairo_move_to"
+		end
+
+	frozen cairo_rectangle(a_cr:POINTER; a_x, a_y, a_width, a_height:REAL_64)
+		external
+			"C (cairo_t *, double, double, double, double) | <cairo.h>"
+		alias
+			"cairo_rectangle"
+		end
+
+	frozen cairo_glyph_path(a_cr, a_glyphs:POINTER; a_num_glyphs:INTEGER)
+		external
+			"C (cairo_t *, const cairo_glyph_t *, int) | <cairo.h>"
+		alias
+			"cairo_glyph_path"
+		end
+
+	frozen cairo_text_path(a_cr, a_utf8:POINTER)
+		external
+			"C (cairo_t *, const char *) | <cairo.h>"
+		alias
+			"cairo_text_path"
+		end
+
+	frozen cairo_rel_curve_to(a_cr:POINTER; a_dx1, a_dy1, a_dx2, a_dy2, a_dx3, a_dy3:REAL_64)
+		external
+			"C (cairo_t *, double, double, double, double, double, double) | <cairo.h>"
+		alias
+			"cairo_rel_curve_to"
+		end
+
+	frozen cairo_rel_line_to(a_cr:POINTER; a_dx, a_dy:REAL_64)
+		external
+			"C (cairo_t *, double, double) | <cairo.h>"
+		alias
+			"cairo_rel_line_to"
+		end
+
+	frozen cairo_rel_move_to(a_cr:POINTER; a_dx, a_dy:REAL_64)
+		external
+			"C (cairo_t *, double, double) | <cairo.h>"
+		alias
+			"cairo_rel_move_to"
+		end
+
+	frozen cairo_path_extents(a_cr, a_x1, a_y1, a_x2, a_y2:POINTER)
+		external
+			"C (cairo_t *, double *, double *, double *, double *) | <cairo.h>"
+		alias
+			"cairo_path_extents"
+		end
+
+	frozen cairo_rectangle_list_destroy(a_rectangle_list:POINTER)
+		external
+			"C (cairo_rectangle_list_t *) | <cairo.h>"
+		alias
+			"cairo_rectangle_list_destroy"
+		end
+
 	frozen cairo_pattern_create_rgb(a_red, a_green, a_blue:REAL_64): POINTER
 		external
 			"C (double, double, double) : cairo_pattern_t * | <cairo.h>"
@@ -796,7 +1258,21 @@ feature -- Functions
 			"cairo_mesh_pattern_get_corner_color_rgba"
 		end
 
-feature -- Structures
+	frozen cairo_mesh_pattern_get_path(a_pattern:POINTER; a_patch_num:NATURAL):POINTER
+		external
+			"C (cairo_pattern_t *, unsigned int) : cairo_path_t * | <cairo.h>"
+		alias
+			"cairo_mesh_pattern_get_path"
+		end
+
+	frozen cairo_path_destroy(a_path:POINTER)
+		external
+			"C (cairo_path_t *) | <cairo.h>"
+		alias
+			"cairo_path_destroy"
+		end
+
+feature -- Structures cairo_matrix_t
 
 	frozen c_sizeof_cairo_matrix:INTEGER
 			-- Size of an cairo_matrix_t C structure.
@@ -889,6 +1365,121 @@ feature -- Structures
 		alias
 			"y0"
 		end
+
+feature -- Structures cairo_path_t
+
+	frozen c_sizeof_cairo_path:INTEGER
+			-- Size of an cairo_path_t C structure.
+		external
+			"C inline use <cairo.h>"
+		alias
+			"sizeof(cairo_path_t)"
+		end
+
+	frozen get_cairo_path_struct_status(a_struct:POINTER):INTEGER
+		external
+			"C [struct <cairo.h>] (cairo_path_t):cairo_status_t"
+		alias
+			"status"
+		end
+
+	frozen get_cairo_path_struct_data(a_struct:POINTER):POINTER
+		external
+			"C [struct <cairo.h>] (cairo_path_t):cairo_path_data_t *"
+		alias
+			"data"
+		end
+
+	frozen get_cairo_path_struct_num_data(a_struct:POINTER):INTEGER
+		external
+			"C [struct <cairo.h>] (cairo_path_t):int"
+		alias
+			"num_data"
+		end
+
+feature -- Structures cairo_path_t
+
+	frozen c_sizeof_rectangle_list:INTEGER
+			-- Size of an cairo_rectangle_list_t C structure.
+		external
+			"C inline use <cairo.h>"
+		alias
+			"sizeof(cairo_rectangle_list_t)"
+		end
+
+	frozen get_cairo_rectangle_list_status(a_struct:POINTER):INTEGER
+		external
+			"C [struct <cairo.h>] (cairo_rectangle_list_t):cairo_status_t"
+		alias
+			"status"
+		end
+
+	frozen get_cairo_rectangle_list_num_rectangles(a_struct:POINTER):INTEGER
+		external
+			"C [struct <cairo.h>] (cairo_rectangle_list_t):int"
+		alias
+			"num_rectangles"
+		end
+
+	frozen get_cairo_rectangle_list_rectangles(a_struct:POINTER):POINTER
+		external
+			"C [struct <cairo.h>] (cairo_rectangle_list_t):cairo_rectangle_t *"
+		alias
+			"rectangles"
+		end
+
+feature -- Structures cairo_glyph_t
+
+	frozen c_sizeof_glyph:INTEGER
+			-- Size of an cairo_glyph_t C structure.
+		external
+			"C inline use <cairo.h>"
+		alias
+			"sizeof(cairo_glyph_t)"
+		end
+
+	frozen get_cairo_glyph_index(a_struct:POINTER):NATURAL_32
+		external
+			"C [struct <cairo.h>] (cairo_glyph_t):unsigned long"
+		alias
+			"index"
+		end
+
+	frozen set_cairo_glyph_index (a_struct: POINTER; a_value:NATURAL_32)
+		external
+			"C [struct <cairo.h>] (cairo_glyph_t, unsigned long)"
+		alias
+			"index"
+		end
+
+	frozen get_cairo_glyph_x(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_glyph_t):double"
+		alias
+			"x"
+		end
+
+	frozen set_cairo_glyph_x (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_glyph_t, double)"
+		alias
+			"x"
+		end
+
+	frozen get_cairo_glyph_y(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_glyph_t):double"
+		alias
+			"y"
+		end
+
+	frozen set_cairo_glyph_y (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_glyph_t, double)"
+		alias
+			"y"
+		end
+
 
 feature -- Constants
 
@@ -1583,6 +2174,265 @@ feature -- Constants
 			"C [macro <cairo.h>] : cairo_pattern_type_t"
 		alias
 			"CAIRO_PATTERN_TYPE_MESH"
+		end
+
+	frozen CAIRO_FILL_RULE_WINDING : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_fill_rule_t"
+		alias
+			"CAIRO_FILL_RULE_WINDING"
+		end
+
+	frozen CAIRO_FILL_RULE_EVEN_ODD : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_fill_rule_t"
+		alias
+			"CAIRO_FILL_RULE_EVEN_ODD"
+		end
+
+	frozen CAIRO_LINE_CAP_BUTT : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_line_cap_t"
+		alias
+			"CAIRO_LINE_CAP_BUTT"
+		end
+
+	frozen CAIRO_LINE_CAP_ROUND : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_line_cap_t"
+		alias
+			"CAIRO_LINE_CAP_ROUND"
+		end
+
+	frozen CAIRO_LINE_CAP_SQUARE : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_line_cap_t"
+		alias
+			"CAIRO_LINE_CAP_SQUARE"
+		end
+
+	frozen CAIRO_LINE_JOIN_MITER : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_line_join_t"
+		alias
+			"CAIRO_LINE_JOIN_MITER"
+		end
+
+	frozen CAIRO_LINE_JOIN_ROUND : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_line_join_t"
+		alias
+			"CAIRO_LINE_JOIN_ROUND"
+		end
+
+	frozen CAIRO_LINE_JOIN_BEVEL : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_line_join_t"
+		alias
+			"CAIRO_LINE_JOIN_BEVEL"
+		end
+
+	frozen CAIRO_OPERATOR_CLEAR : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_CLEAR"
+		end
+
+	frozen CAIRO_OPERATOR_SOURCE : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_SOURCE"
+		end
+
+	frozen CAIRO_OPERATOR_OVER : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_OVER"
+		end
+
+	frozen CAIRO_OPERATOR_IN : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_IN"
+		end
+
+	frozen CAIRO_OPERATOR_OUT : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_OUT"
+		end
+
+	frozen CAIRO_OPERATOR_ATOP : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_ATOP"
+		end
+
+	frozen CAIRO_OPERATOR_DEST : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_DEST"
+		end
+
+	frozen CAIRO_OPERATOR_DEST_OVER : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_DEST_OVER"
+		end
+
+	frozen CAIRO_OPERATOR_DEST_IN : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_DEST_IN"
+		end
+
+	frozen CAIRO_OPERATOR_DEST_OUT : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_DEST_OUT"
+		end
+
+	frozen CAIRO_OPERATOR_DEST_ATOP : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_DEST_ATOP"
+		end
+
+	frozen CAIRO_OPERATOR_XOR : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_XOR"
+		end
+
+	frozen CAIRO_OPERATOR_ADD : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_ADD"
+		end
+
+	frozen CAIRO_OPERATOR_SATURATE : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_SATURATE"
+		end
+
+	frozen CAIRO_OPERATOR_MULTIPLY : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_MULTIPLY"
+		end
+
+	frozen CAIRO_OPERATOR_SCREEN : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_SCREEN"
+		end
+
+	frozen CAIRO_OPERATOR_OVERLAY : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_OVERLAY"
+		end
+
+	frozen CAIRO_OPERATOR_DARKEN : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_DARKEN"
+		end
+
+	frozen CAIRO_OPERATOR_LIGHTEN : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_LIGHTEN"
+		end
+
+	frozen CAIRO_OPERATOR_COLOR_DODGE : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_COLOR_DODGE"
+		end
+
+	frozen CAIRO_OPERATOR_COLOR_BURN : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_COLOR_BURN"
+		end
+
+	frozen CAIRO_OPERATOR_HARD_LIGHT : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_HARD_LIGHT"
+		end
+
+	frozen CAIRO_OPERATOR_SOFT_LIGHT : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_SOFT_LIGHT"
+		end
+
+	frozen CAIRO_OPERATOR_DIFFERENCE : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_DIFFERENCE"
+		end
+
+	frozen CAIRO_OPERATOR_EXCLUSION : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_EXCLUSION"
+		end
+
+	frozen CAIRO_OPERATOR_HSL_HUE : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_HSL_HUE"
+		end
+
+	frozen CAIRO_OPERATOR_HSL_SATURATION : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_HSL_SATURATION"
+		end
+
+	frozen CAIRO_OPERATOR_HSL_COLOR : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_HSL_COLOR"
+		end
+
+	frozen CAIRO_OPERATOR_HSL_LUMINOSITY : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_operator_t"
+		alias
+			"CAIRO_OPERATOR_HSL_LUMINOSITY"
 		end
 
 end

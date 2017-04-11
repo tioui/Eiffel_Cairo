@@ -11,8 +11,20 @@ class
 	CAIRO_SURFACE
 
 inherit
+	CAIRO_INTERNAL_MEMORY_POINTER
+		rename
+			make as make_from_item
+		redefine
+			make_from_item
+		end
 	CAIRO_ERROR
+		undefine
+			is_equal
+		end
 	DISPOSABLE
+		undefine
+			is_equal
+		end
 
 create {CAIRO_ANY}
 	make_from_item
@@ -61,22 +73,16 @@ feature {NONE} -- Implementation
 		end
 
 	make_from_item(a_item:POINTER)
-		require
-			Is_Not_Null: not a_item.is_default_pointer
+			-- <Precursor>
 		do
 			item := {CAIRO_EXTERNALS}.cairo_surface_reference(a_item)
 			if not item.is_default_pointer then
 				check_for_error
 				is_valid := is_success
 			end
-		ensure
-			Is_Created: not item.is_default_pointer
 		end
 
 feature -- Access
-
-	is_valid:BOOLEAN
-			-- `Current' can be used
 
 	content_type:CAIRO_CONTENT_TYPE
 			-- Type of content in `Current'
@@ -237,10 +243,6 @@ feature -- Access
 		do
 			Result := {CAIRO_EXTERNALS}.cairo_surface_has_show_text_glyphs(item)
 		end
-
-feature {CAIRO_ANY} -- Implementation
-
-	item:POINTER
 
 feature {NONE} -- Implementation
 

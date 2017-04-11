@@ -8,13 +8,10 @@ class
 	CAIRO_PIXEL_FORMAT
 
 inherit
-	CAIRO_ANY
-		redefine
-			is_equal
-		end
+	CAIRO_INTERNAL_ENUM
 
 create {CAIRO_ANY}
-	make_from_item
+	make
 
 create
 	make_argb32,
@@ -26,16 +23,10 @@ create
 
 feature {NONE} -- Initialization
 
-	make_from_item(a_item:INTEGER)
-			-- Initialization of `Current' using `a_item' as `item'
-		do
-			item := a_item
-		end
-
 	make_argb32
 			-- Initialization of `Current' with `is_argb32' set to `True'
 		do
-			make_from_item ({CAIRO_EXTERNALS}.CAIRO_FORMAT_ARGB32)
+			make ({CAIRO_EXTERNALS}.CAIRO_FORMAT_ARGB32)
 		ensure
 			Is_Valid: is_argb32
 		end
@@ -43,7 +34,7 @@ feature {NONE} -- Initialization
 	make_rgb24
 			-- Initialization of `Current' with `is_rgb24' set to `True'
 		do
-			make_from_item ({CAIRO_EXTERNALS}.CAIRO_FORMAT_RGB24)
+			make ({CAIRO_EXTERNALS}.CAIRO_FORMAT_RGB24)
 		ensure
 			Is_Valid: is_rgb24
 		end
@@ -51,7 +42,7 @@ feature {NONE} -- Initialization
 	make_a8
 			-- Initialization of `Current' with `is_a8' set to `True'
 		do
-			make_from_item ({CAIRO_EXTERNALS}.CAIRO_FORMAT_A8)
+			make ({CAIRO_EXTERNALS}.CAIRO_FORMAT_A8)
 		ensure
 			Is_Valid: is_a8
 		end
@@ -59,7 +50,7 @@ feature {NONE} -- Initialization
 	make_a1
 			-- Initialization of `Current' with `is_a1' set to `True'
 		do
-			make_from_item ({CAIRO_EXTERNALS}.CAIRO_FORMAT_A1)
+			make ({CAIRO_EXTERNALS}.CAIRO_FORMAT_A1)
 		ensure
 			Is_Valid: is_a1
 		end
@@ -67,7 +58,7 @@ feature {NONE} -- Initialization
 	make_rgb16_565
 			-- Initialization of `Current' with `is_rgb16_565' set to `True'
 		do
-			make_from_item ({CAIRO_EXTERNALS}.CAIRO_FORMAT_RGB16_565)
+			make ({CAIRO_EXTERNALS}.CAIRO_FORMAT_RGB16_565)
 		ensure
 			Is_Valid: is_rgb16_565
 		end
@@ -75,7 +66,7 @@ feature {NONE} -- Initialization
 	make_rgb30
 			-- Initialization of `Current' with `is_rgb30' set to `True'
 		do
-			make_from_item ({CAIRO_EXTERNALS}.CAIRO_FORMAT_RGB30)
+			make ({CAIRO_EXTERNALS}.CAIRO_FORMAT_RGB30)
 		ensure
 			Is_Valid: is_rgb30
 		end
@@ -126,18 +117,4 @@ feature -- Access
 		do
 			Result := item  = {CAIRO_EXTERNALS}.CAIRO_FORMAT_RGB30
 		end
-
-feature -- Comparison
-
-	is_equal (a_other: like Current): BOOLEAN
-			-- <Precursor>
-		do
-			Result := item ~ a_other.item
-		end
-
-feature {CAIRO_ANY} -- Implementation
-
-	item:INTEGER
-			-- The internal value of `Current'
-
 end

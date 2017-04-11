@@ -9,19 +9,20 @@ class
 
 inherit
 	CAIRO_MATRIX_ERROR
+		undefine
+			is_equal
 		redefine
-			default_create, is_equal
+			default_create
 		end
-	MEMORY_STRUCTURE
-		export
-			{CAIRO_TRANSFORMATION_MATRIX} all
-			{CAIRO_ANY} item
+	CAIRO_INTERNAL_MEMORY_POINTER
+		rename
+			make as make_from_item
 		redefine
-			default_create, is_equal
+			default_create, is_equal, make_from_item
 		end
 
 create {CAIRO_ANY}
-	own_by_pointer
+	make_from_item
 
 create {CAIRO_TRANSFORMATION_MATRIX}
 	make
@@ -35,23 +36,29 @@ create
 
 feature {NONE} -- Initialization
 
-	own_by_pointer(a_item:POINTER)
-			-- Initialization of `Current' owning `a_item' as `item'
+	make
+			-- Initialization of `Current'
 		do
-			create internal_item
-			create managed_pointer.own_from_pointer (a_item, structure_size)
-			shared := False
+			item := item.memory_alloc ({CAIRO_EXTERNALS}.c_sizeof_cairo_matrix)
+			error_code := {CAIRO_EXTERNALS}.CAIRO_STATUS_SUCCESS
+		ensure
+			Is_Created: not item.is_default_pointer
 		end
 
+	make_from_item(a_item:POINTER)
+			-- <Precursor>
+		do
+			Precursor(a_item)
+			error_code := {CAIRO_EXTERNALS}.CAIRO_STATUS_SUCCESS
+		end
 
 	default_create
 			-- Initialization an identity version of `Current'
 		do
 			make
 			{CAIRO_EXTERNALS}.cairo_matrix_init_identity(item)
-			error_code := {CAIRO_EXTERNALS}.CAIRO_STATUS_SUCCESS
 		ensure then
-			not_shared: not shared
+			Is_Created: not item.is_default_pointer
 		end
 
 	make_from_components(a_xx, a_yx, a_xy, a_yy, a_x0, a_y0:REAL_64)
@@ -61,9 +68,8 @@ feature {NONE} -- Initialization
 		do
 			make
 			{CAIRO_EXTERNALS}.cairo_matrix_init(item, a_xx, a_yx, a_xy, a_yy, a_x0, a_y0)
-			error_code := {CAIRO_EXTERNALS}.CAIRO_STATUS_SUCCESS
 		ensure
-			not_shared: not shared
+			Is_Created: not item.is_default_pointer
 		end
 
 	make_translate(a_translate_x, a_translate_y:REAL_64)
@@ -72,9 +78,8 @@ feature {NONE} -- Initialization
 		do
 			make
 			{CAIRO_EXTERNALS}.cairo_matrix_init_translate(item, a_translate_x, a_translate_y)
-			error_code := {CAIRO_EXTERNALS}.CAIRO_STATUS_SUCCESS
 		ensure
-			not_shared: not shared
+			Is_Created: not item.is_default_pointer
 		end
 
 	make_scale(a_scale_x, a_scale_y:REAL_64)
@@ -83,9 +88,8 @@ feature {NONE} -- Initialization
 		do
 			make
 			{CAIRO_EXTERNALS}.cairo_matrix_init_scale(item, a_scale_x, a_scale_y)
-			error_code := {CAIRO_EXTERNALS}.CAIRO_STATUS_SUCCESS
 		ensure
-			not_shared: not shared
+			Is_Created: not item.is_default_pointer
 		end
 
 	make_rotate(a_radian:REAL_64)
@@ -93,9 +97,8 @@ feature {NONE} -- Initialization
 		do
 			make
 			{CAIRO_EXTERNALS}.cairo_matrix_init_rotate(item, a_radian)
-			error_code := {CAIRO_EXTERNALS}.CAIRO_STATUS_SUCCESS
 		ensure
-			not_shared: not shared
+			Is_Created: not item.is_default_pointer
 		end
 
 feature -- Access
@@ -244,21 +247,13 @@ feature -- Comparison
 	is_equal (a_other: like Current): BOOLEAN
 			-- <Precursor>
 		do
-			Result :=
+			Result :=	Precursor {CAIRO_INTERNAL_MEMORY_POINTER}(a_other) or (
 						xx ~ a_other.xx and
 						yx ~ a_other.yx and
 						xy ~ a_other.xy and
 						yy ~ a_other.yy and
 						x0 ~ a_other.x0 and
 						y0 ~ a_other.y0
+					)
 		end
-
-feature {NONE} -- Implementation
-
-	structure_size: INTEGER
-			-- <Precursor>
-		do
-			Result := {CAIRO_EXTERNALS}.c_sizeof_cairo_matrix
-		end
-
 end

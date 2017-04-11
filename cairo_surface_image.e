@@ -89,7 +89,7 @@ feature -- Access
 		require
 			Is_Valid:is_valid
 		do
-			create Result.make_from_item ({CAIRO_EXTERNALS}.cairo_image_surface_get_format(item))
+			create Result.make ({CAIRO_EXTERNALS}.cairo_image_surface_get_format(item))
 		end
 
 	width:INTEGER

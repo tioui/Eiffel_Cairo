@@ -8,23 +8,23 @@ class
 	CAIRO_PATTERN
 
 inherit
+	CAIRO_INTERNAL_MEMORY_POINTER
+		rename
+			make as make_from_item
+		end
 	CAIRO_PATTERN_ERROR
+		undefine
+			is_equal
+		end
 	DISPOSABLE
+		undefine
+			is_equal
+		end
 
 create {CAIRO_ANY}
 	make_from_item
 
 feature {NONE} -- Initialization
-
-	make_from_item(a_item:POINTER)
-			-- Initialization of `Current' using `a_item' as `item'
-		require
-			Item_Not_Null: not a_item.is_default_pointer
-		do
-			item := a_item
-		ensure
-			Item_Not_Null: not item.is_default_pointer
-		end
 
 	validate_item
 			-- Used after the `item' creation to validate the `item'
@@ -36,9 +36,6 @@ feature {NONE} -- Initialization
 		end
 
 feature -- Access
-
-	is_valid:BOOLEAN
-			-- `Current' is a valid pattern
 
 	disable_extend
 			-- Pixels outside of the source pattern are fully transparent
@@ -226,12 +223,6 @@ feature -- Access
 		do
 			Result := {CAIRO_EXTERNALS}.cairo_pattern_get_filter(item) = {CAIRO_EXTERNALS}.CAIRO_FILTER_BILINEAR
 		end
-
-
-feature {CAIRO_ANY} -- Implementation
-
-	item:POINTER
-			-- Internal reprensentation of `Current'
 
 feature {NONE} -- Implementation
 

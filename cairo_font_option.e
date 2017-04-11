@@ -8,6 +8,14 @@ class
 	CAIRO_FONT_OPTION
 
 inherit
+	CAIRO_ANTIALIASABLE
+		redefine
+			default_create, is_equal
+		end
+	CAIRO_INTERNAL_MEMORY_POINTER
+		redefine
+			default_create, is_equal
+		end
 	CAIRO_NO_MEMORY_ERROR
 		redefine
 			default_create, is_equal
@@ -26,7 +34,7 @@ feature {NONE} -- Initialization
 	default_create
 			-- Initialization of `Current'
 		do
-			item := {CAIRO_EXTERNALS}.cairo_font_options_create
+			make ({CAIRO_EXTERNALS}.cairo_font_options_create)
 			error_code := {CAIRO_EXTERNALS}.cairo_font_options_status(item)
 			is_valid := is_success
 		end
@@ -34,7 +42,7 @@ feature {NONE} -- Initialization
 	make_from_other(a_other:CAIRO_FONT_OPTION)
 			-- Initialization of `Current' copying `a_other'
 		do
-			item := {CAIRO_EXTERNALS}.cairo_font_options_copy(a_other.item)
+			make ({CAIRO_EXTERNALS}.cairo_font_options_copy(a_other.item))
 			error_code := {CAIRO_EXTERNALS}.cairo_font_options_status(item)
 			is_valid := is_success
 		end
@@ -60,60 +68,45 @@ feature -- Settings
 		end
 
 	set_default_antialiasing
-			-- Use the default antialiasing in `Current'
+			-- <Precursor>
 		do
 			{CAIRO_EXTERNALS}.cairo_font_options_set_antialias(item, {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_DEFAULT)
-		ensure
-			Is_Set: is_default_antialiasing
 		end
 
 	set_no_antialiasing
-			-- Don't use any antialiasing in `Current'
+			-- <Precursor>
 		do
 			{CAIRO_EXTERNALS}.cairo_font_options_set_antialias(item, {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_NONE)
-		ensure
-			Is_Set: is_no_antialiasing
 		end
 
 	set_single_color_antialiasing
-			-- Use single-color antialiasing in `Current'.
-			-- For exemple, using shades of gray for black text on a white background
+			-- <Precursor>
 		do
 			{CAIRO_EXTERNALS}.cairo_font_options_set_antialias(item, {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_GRAY)
-		ensure
-			Is_Set: is_single_color_antialiasing
 		end
 
 	set_subpixel_antialiasing
-			-- Use antialiasing by taking advantage of the order of subpixel elements on devices such as LCD panels.
+			-- <Precursor>
 		do
 			{CAIRO_EXTERNALS}.cairo_font_options_set_antialias(item, {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_SUBPIXEL)
-		ensure
-			Is_Set: is_subpixel_antialiasing
 		end
 
 	set_fast_antialiasing
-			-- Hint that `Current' should perform some antialiasing but prefer speed over quality
+			-- <Precursor>
 		do
 			{CAIRO_EXTERNALS}.cairo_font_options_set_antialias(item, {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_FAST)
-		ensure
-			Is_Set: is_fast_antialiasing
 		end
 
 	set_good_antialiasing
-			-- Hint that `Current' should balance quality against performance
+			-- <Precursor>
 		do
 			{CAIRO_EXTERNALS}.cairo_font_options_set_antialias(item, {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_GOOD)
-		ensure
-			Is_Set: is_good_antialiasing
 		end
 
 	set_best_antialiasing
-			-- Hint that `Current' should render at the highest quality, sacrificing speed if necessary
+			-- <Precursor>
 		do
 			{CAIRO_EXTERNALS}.cairo_font_options_set_antialias(item, {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_BEST)
-		ensure
-			Is_Set: is_best_antialiasing
 		end
 
 	set_default_subpixel_order
@@ -262,48 +255,44 @@ feature -- Settings
 
 feature -- Status report
 
-	is_valid:BOOLEAN
-			-- Is `Current' correctly initialized
-
 	is_default_antialiasing:BOOLEAN
-			-- `True' if `Current' use the default antialiasing
+			-- <Precursor>
 		do
 			Result := {CAIRO_EXTERNALS}.cairo_font_options_get_antialias(item) = {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_DEFAULT
 		end
 
 	is_no_antialiasing:BOOLEAN
-			-- `True' if `Current' don't use any antialiasing
+			-- <Precursor>
 		do
 			Result := {CAIRO_EXTERNALS}.cairo_font_options_get_antialias(item) = {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_NONE
 		end
 
 	is_single_color_antialiasing:BOOLEAN
-			-- `True' if `Current' use a single-color antialiasing
+			-- <Precursor>
 		do
 			Result := {CAIRO_EXTERNALS}.cairo_font_options_get_antialias(item) = {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_GRAY
 		end
 
 	is_subpixel_antialiasing:BOOLEAN
-			-- `True' if `Current' use antialiasing by taking advantage
-			-- of the order of subpixel elements on devices such as LCD panels.
+			-- <Precursor>
 		do
 			Result := {CAIRO_EXTERNALS}.cairo_font_options_get_antialias(item) = {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_SUBPIXEL
 		end
 
 	is_fast_antialiasing:BOOLEAN
-			-- `True' if `Current' should perform some antialiasing but prefer speed over quality
+			-- <Precursor>
 		do
 			Result := {CAIRO_EXTERNALS}.cairo_font_options_get_antialias(item) = {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_FAST
 		end
 
 	is_good_antialiasing:BOOLEAN
-			-- `True' if `Current' should balance quality against performance
+			-- <Precursor>
 		do
 			Result := {CAIRO_EXTERNALS}.cairo_font_options_get_antialias(item) = {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_GOOD
 		end
 
 	is_best_antialiasing:BOOLEAN
-			-- `True' if `Current' should render at the highest quality, sacrificing speed if necessary
+			-- <Precursor>
 		do
 			Result := {CAIRO_EXTERNALS}.cairo_font_options_get_antialias(item) = {CAIRO_EXTERNALS}.CAIRO_ANTIALIAS_BEST
 		end
@@ -433,11 +422,6 @@ feature -- Comparison
 		do
 			Result := {CAIRO_EXTERNALS}.cairo_font_options_equal(item, a_other.item)
 		end
-
-feature {CAIRO_ANY} -- Implementation
-
-	item:POINTER
-			-- Internal representation of `Current'
 
 feature {NONE} -- Removal
 

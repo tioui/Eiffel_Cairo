@@ -101,6 +101,9 @@ class
 
 inherit
 	CAIRO_PATTERN_MESH_ERROR
+		undefine
+			is_equal
+		end
 	CAIRO_PATTERN
 		rename
 			make_from_item as make_pattern_from_item
@@ -325,6 +328,16 @@ feature -- Access
 												$l_red, $l_green, $l_blue, $l_alpha
 											)
 			Result := [l_red, l_green, l_blue, l_alpha]
+		end
+
+	patch_path(a_patch_index:NATURAL):CAIRO_PATH
+			-- The {CAIRO_PATH} that is the result of the patch at index `a_patch_index'
+			-- If there is an error, the error is store in `Result', not in `Current'
+		require
+			Is_Valid: is_valid
+			Is_Patch_Index_Valid: a_patch_index >= 1 and a_patch_index <= patch_count
+		do
+			create Result.make_shared({CAIRO_EXTERNALS}.cairo_mesh_pattern_get_path(item, a_patch_index))
 		end
 
 feature -- Status report
