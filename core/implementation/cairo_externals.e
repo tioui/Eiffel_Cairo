@@ -1003,6 +1003,180 @@ feature -- Functions
 			"cairo_path_extents"
 		end
 
+	frozen cairo_set_font_size(a_cr:POINTER; a_size:REAL_64)
+		external
+			"C (cairo_t *, double) | <cairo.h>"
+		alias
+			"cairo_set_font_size"
+		end
+
+	frozen cairo_set_font_matrix(a_cr, a_matrix:POINTER)
+		external
+			"C (cairo_t *, const cairo_matrix_t *) | <cairo.h>"
+		alias
+			"cairo_set_font_matrix"
+		end
+
+	frozen cairo_get_font_matrix(a_cr:POINTER):POINTER
+		external
+			"C (cairo_t *) : cairo_matrix_t * | <cairo.h>"
+		alias
+			"cairo_get_font_matrix"
+		end
+
+	frozen cairo_set_font_options(a_cr, a_options:POINTER)
+		external
+			"C (cairo_t *, const cairo_font_options_t *) | <cairo.h>"
+		alias
+			"cairo_set_font_options"
+		end
+
+	frozen cairo_get_font_options(a_cr, a_options:POINTER)
+		external
+			"C (cairo_t *, cairo_font_options_t *) | <cairo.h>"
+		alias
+			"cairo_get_font_options"
+		end
+
+	frozen cairo_set_font_face(a_cr, a_font_face:POINTER)
+		external
+			"C (cairo_t *, cairo_font_face_t *) | <cairo.h>"
+		alias
+			"cairo_set_font_face"
+		end
+
+	frozen cairo_get_font_face(a_cr:POINTER):POINTER
+		external
+			"C (cairo_t *) : cairo_font_face_t * | <cairo.h>"
+		alias
+			"cairo_get_font_face"
+		end
+
+	frozen cairo_scaled_font_create(a_font_face, a_font_matrix, a_ctm, a_options:POINTER):POINTER
+		external
+			"C (cairo_font_face_t *, const cairo_matrix_t *, const cairo_matrix_t *, const cairo_font_options_t *) : cairo_scaled_font_t * | <cairo.h>"
+		alias
+			"cairo_scaled_font_create"
+		end
+
+	frozen cairo_scaled_font_reference(a_scaled_font:POINTER):POINTER
+		external
+			"C (cairo_scaled_font_t *) : cairo_scaled_font_t * | <cairo.h>"
+		alias
+			"cairo_scaled_font_reference"
+		end
+
+	frozen cairo_scaled_font_destroy(a_scaled_font:POINTER)
+		external
+			"C (cairo_scaled_font_t *) | <cairo.h>"
+		alias
+			"cairo_scaled_font_destroy"
+		end
+
+	frozen cairo_scaled_font_get_font_face(a_scaled_font:POINTER):POINTER
+		external
+			"C (cairo_scaled_font_t *) : cairo_font_face_t * | <cairo.h>"
+		alias
+			"cairo_scaled_font_get_font_face"
+		end
+
+	frozen cairo_scaled_font_status(a_scaled_font:POINTER):INTEGER
+		external
+			"C (cairo_scaled_font_t *) : cairo_status_t | <cairo.h>"
+		alias
+			"cairo_scaled_font_status"
+		end
+
+	frozen cairo_scaled_font_get_font_options(a_scaled_font, a_options:POINTER)
+		external
+			"C (cairo_scaled_font_t *, cairo_font_options_t *) | <cairo.h>"
+		alias
+			"cairo_scaled_font_get_font_options"
+		end
+
+	frozen cairo_scaled_font_get_font_matrix(a_scaled_font, a_matrix:POINTER)
+		external
+			"C (cairo_scaled_font_t *, cairo_matrix_t *) | <cairo.h>"
+		alias
+			"cairo_scaled_font_get_font_matrix"
+		end
+
+	frozen cairo_scaled_font_get_ctm(a_scaled_font, a_matrix:POINTER)
+		external
+			"C (cairo_scaled_font_t *, cairo_matrix_t *) | <cairo.h>"
+		alias
+			"cairo_scaled_font_get_ctm"
+		end
+
+	frozen cairo_scaled_font_get_scale_matrix(a_scaled_font, a_matrix:POINTER)
+		external
+			"C (cairo_scaled_font_t *, cairo_matrix_t *) | <cairo.h>"
+		alias
+			"cairo_scaled_font_get_scale_matrix"
+		end
+
+	frozen cairo_scaled_font_extents(a_scaled_font, a_extents:POINTER)
+		external
+			"C (cairo_scaled_font_t *, cairo_font_extents_t *) | <cairo.h>"
+		alias
+			"cairo_scaled_font_extents"
+		end
+
+	frozen cairo_scaled_font_text_extents(a_scaled_font, a_utf8, a_extents:POINTER)
+		external
+			"C (cairo_scaled_font_t *, const char *, cairo_text_extents_t *) | <cairo.h>"
+		alias
+			"cairo_scaled_font_text_extents"
+		end
+
+	frozen cairo_scaled_font_glyph_extents(a_scaled_font, a_glyphs:POINTER; a_num_glyphs:INTEGER; a_extents:POINTER)
+		external
+			"C (cairo_scaled_font_t *, const cairo_glyph_t *, int, cairo_text_extents_t *) | <cairo.h>"
+		alias
+			"cairo_scaled_font_glyph_extents"
+		end
+
+	frozen cairo_scaled_font_text_to_glyphs(
+							a_scaled_font:POINTER;
+							a_x, a_y:REAL_64;
+							a_utf8:POINTER; a_utf8_len:INTEGER;
+							a_glyphs, a_num_glyphs, a_clusters,
+							a_num_clusters, a_cluster_flags:POINTER
+						) : INTEGER
+		external
+			"C (cairo_scaled_font_t *, double, double, const char *, int, cairo_glyph_t **, int *, cairo_text_cluster_t **, int *, cairo_text_cluster_flags_t *) : cairo_status_t | <cairo.h>"
+		alias
+			"cairo_scaled_font_text_to_glyphs"
+		end
+
+	frozen cairo_glyph_allocate(a_num_glyphs:INTEGER):POINTER
+		external
+			"C (int) : cairo_glyph_t * | <cairo.h>"
+		alias
+			"cairo_glyph_allocate"
+		end
+
+	frozen cairo_glyph_free(a_glyphs:POINTER)
+		external
+			"C (cairo_glyph_t *) | <cairo.h>"
+		alias
+			"cairo_glyph_free"
+		end
+
+	frozen cairo_text_cluster_allocate(num_clusters:INTEGER):POINTER
+		external
+			"C (int) : cairo_text_cluster_t * | <cairo.h>"
+		alias
+			"cairo_text_cluster_allocate"
+		end
+
+	frozen cairo_text_cluster_free(a_clusters:POINTER)
+		external
+			"C (cairo_text_cluster_t *) | <cairo.h>"
+		alias
+			"cairo_text_cluster_free"
+		end
+
 	frozen cairo_rectangle_list_destroy(a_rectangle_list:POINTER)
 		external
 			"C (cairo_rectangle_list_t *) | <cairo.h>"
@@ -1480,6 +1654,217 @@ feature -- Structures cairo_glyph_t
 			"y"
 		end
 
+feature -- Structures cairo_font_extents_t
+
+	frozen c_sizeof_font_extents:INTEGER
+			-- Size of an cairo_font_extents_t C structure.
+		external
+			"C inline use <cairo.h>"
+		alias
+			"sizeof(cairo_font_extents_t)"
+		end
+
+	frozen get_cairo_font_extents_ascent(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_font_extents_t):double"
+		alias
+			"ascent"
+		end
+
+	frozen set_cairo_font_extents_ascent (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_font_extents_t, double)"
+		alias
+			"ascent"
+		end
+
+	frozen get_cairo_font_extents_descent(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_font_extents_t):double"
+		alias
+			"descent"
+		end
+
+	frozen set_cairo_font_extents_descent (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_font_extents_t, double)"
+		alias
+			"descent"
+		end
+
+	frozen get_cairo_font_extents_height(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_font_extents_t):double"
+		alias
+			"height"
+		end
+
+	frozen set_cairo_font_extents_height (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_font_extents_t, double)"
+		alias
+			"height"
+		end
+
+	frozen get_cairo_font_extents_max_x_advance(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_font_extents_t):double"
+		alias
+			"max_x_advance"
+		end
+
+	frozen set_cairo_font_extents_max_x_advance (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_font_extents_t, double)"
+		alias
+			"max_x_advance"
+		end
+
+	frozen get_cairo_font_extents_max_y_advance(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_font_extents_t):double"
+		alias
+			"max_y_advance"
+		end
+
+	frozen set_cairo_font_extents_max_y_advance (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_font_extents_t, double)"
+		alias
+			"max_y_advance"
+		end
+
+feature -- Structures cairo_text_extents_t
+
+	frozen c_sizeof_text_extents:INTEGER
+			-- Size of an cairo_text_extents_t C structure.
+		external
+			"C inline use <cairo.h>"
+		alias
+			"sizeof(cairo_text_extents_t)"
+		end
+
+	frozen get_cairo_text_extents_x_bearing(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t):double"
+		alias
+			"x_bearing"
+		end
+
+	frozen set_cairo_text_extents_x_bearing (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t, double)"
+		alias
+			"x_bearing"
+		end
+
+	frozen get_cairo_text_extents_y_bearing(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t):double"
+		alias
+			"y_bearing"
+		end
+
+	frozen set_cairo_text_extents_y_bearing (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t, double)"
+		alias
+			"y_bearing"
+		end
+
+	frozen get_cairo_text_extents_height(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t):double"
+		alias
+			"height"
+		end
+
+	frozen set_cairo_text_extents_height (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t, double)"
+		alias
+			"height"
+		end
+
+	frozen get_cairo_text_extents_width(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t):double"
+		alias
+			"width"
+		end
+
+	frozen set_cairo_text_extents_width (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t, double)"
+		alias
+			"width"
+		end
+
+	frozen get_cairo_text_extents_x_advance(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t):double"
+		alias
+			"x_advance"
+		end
+
+	frozen set_cairo_text_extents_x_advance (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t, double)"
+		alias
+			"x_advance"
+		end
+
+	frozen get_cairo_text_extents_y_advance(a_struct:POINTER):REAL_64
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t):double"
+		alias
+			"y_advance"
+		end
+
+	frozen set_cairo_text_extents_y_advance (a_struct: POINTER; a_value:REAL_64)
+		external
+			"C [struct <cairo.h>] (cairo_text_extents_t, double)"
+		alias
+			"y_advance"
+		end
+
+feature -- Structures cairo_text_cluster_t
+
+	frozen c_sizeof_text_cluster:INTEGER
+			-- Size of an cairo_text_cluster_t C structure.
+		external
+			"C inline use <cairo.h>"
+		alias
+			"sizeof(cairo_text_cluster_t)"
+		end
+
+	frozen get_cairo_text_cluster_num_bytes(a_struct:POINTER):INTEGER
+		external
+			"C [struct <cairo.h>] (cairo_text_cluster_t):int"
+		alias
+			"num_bytes"
+		end
+
+	frozen set_cairo_text_cluster_num_bytes (a_struct: POINTER; a_value:INTEGER)
+		external
+			"C [struct <cairo.h>] (cairo_text_cluster_t, int)"
+		alias
+			"num_bytes"
+		end
+
+	frozen get_cairo_text_cluster_num_glyphs(a_struct:POINTER):INTEGER
+		external
+			"C [struct <cairo.h>] (cairo_text_cluster_t):int"
+		alias
+			"num_glyphs"
+		end
+
+	frozen set_cairo_text_cluster_num_glyphs (a_struct: POINTER; a_value:INTEGER)
+		external
+			"C [struct <cairo.h>] (cairo_text_cluster_t, int)"
+		alias
+			"num_glyphs"
+		end
 
 feature -- Constants
 
@@ -2433,6 +2818,13 @@ feature -- Constants
 			"C [macro <cairo.h>] : cairo_operator_t"
 		alias
 			"CAIRO_OPERATOR_HSL_LUMINOSITY"
+		end
+
+	frozen CAIRO_TEXT_CLUSTER_FLAG_BACKWARD : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_text_cluster_flags_t"
+		alias
+			"CAIRO_TEXT_CLUSTER_FLAG_BACKWARD"
 		end
 
 end

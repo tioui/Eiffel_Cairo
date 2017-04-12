@@ -11,12 +11,18 @@ class
 	CAIRO_GLYPH
 
 inherit
+	CAIRO_ANY
+		redefine
+			default_create,
+			is_equal
+		end
 	MEMORY_STRUCTURE
 		export
 			{NONE} make, make_by_pointer;
 			{CAIRO_ANY} item, shared
 		redefine
-			default_create
+			default_create,
+			is_equal
 		end
 
 create {CAIRO_ANY}
@@ -79,6 +85,18 @@ feature -- Access
 			{CAIRO_EXTERNALS}.set_cairo_glyph_y(item, a_y)
 		ensure
 			Is_Assign: y ~ a_y
+		end
+
+feature -- Comparison
+
+	is_equal (a_other: like Current): BOOLEAN
+			-- <Precursor>
+		do
+			Result :=	item = a_other.item or (
+						index ~ a_other.index and
+						x ~ a_other.x and
+						y ~ a_other.y 
+					)
 		end
 
 feature {NONE} -- Measurement

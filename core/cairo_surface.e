@@ -155,7 +155,7 @@ feature -- Access
 			{CAIRO_EXTERNALS}.cairo_surface_flush(item)
 		end
 
-	retreive_font_options(a_option:CAIRO_FONT_OPTION)
+	retreive_font_options(a_option:CAIRO_FONT_OPTIONS)
 			-- Store the default font option of `Current' in `a_option'.
 			-- All existing values are overwritten
 		require
@@ -164,7 +164,7 @@ feature -- Access
 			{CAIRO_EXTERNALS}.cairo_surface_get_font_options(item, a_option.item)
 		end
 
-	font_options:CAIRO_FONT_OPTION
+	font_options:CAIRO_FONT_OPTIONS
 			-- The default font option of `Current'
 		require
 			Is_Valid:is_valid

@@ -1112,6 +1112,72 @@ feature -- Access
 			Result := [l_x1, l_y1, l_x2, l_y2]
 		end
 
+	set_font_size(a_size:REAL_64)
+			-- Sets the current font matrix to a scale by a factor of `a_size'
+			-- This replace the `font_matrix'
+		require
+			Is_Valid:is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_set_font_size(item, a_size)
+		end
+
+	font_matrix:CAIRO_TRANSFORMATION_MATRIX assign set_font_matrix
+			-- The transformation matrix that is applied to the text drawing
+		require
+			Is_Valid:is_valid
+		do
+			create Result.make_from_item({CAIRO_EXTERNALS}.cairo_get_font_matrix(item))
+		end
+
+
+	set_font_matrix(a_matrix:CAIRO_TRANSFORMATION_MATRIX)
+			-- Assign `font_matrix' with the value of `a_matrix'
+		require
+			Is_Valid:is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_set_font_matrix(item, a_matrix.item)
+		ensure
+			Is_Assign: font_matrix ~ a_matrix
+		end
+
+	font_options:CAIRO_FONT_OPTIONS assign set_font_options
+			-- Text rendering options
+		require
+			Is_Valid:is_valid
+		do
+			create Result
+			{CAIRO_EXTERNALS}.cairo_get_font_options(item, Result.item)
+		end
+
+	set_font_options(a_options:CAIRO_FONT_OPTIONS)
+			-- Assign `font_options' with the value of `a_options'
+		require
+			Is_Valid:is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_set_font_options(item, a_options.item)
+		ensure
+			Is_Assign: font_options ~ a_options
+		end
+
+	font_face:CAIRO_FONT_FACE assign set_font_face
+			-- The font face used to render text.
+		require
+			Is_Valid:is_valid
+		do
+			create Result.make({CAIRO_EXTERNALS}.cairo_get_font_face(item))
+		end
+
+	set_font_face(a_face:CAIRO_FONT_FACE)
+			-- Assign `font_face' with the value of `a_face'.
+		require
+			Is_Valid:is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_set_font_face(item, a_face.item)
+		end
+
+
+
+
 
 feature {NONE} -- Implementation
 

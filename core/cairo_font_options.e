@@ -5,7 +5,7 @@ note
 	revision: "0.1"
 
 class
-	CAIRO_FONT_OPTION
+	CAIRO_FONT_OPTIONS
 
 inherit
 	CAIRO_ANTIALIASABLE
@@ -39,7 +39,7 @@ feature {NONE} -- Initialization
 			is_valid := is_success
 		end
 
-	make_from_other(a_other:CAIRO_FONT_OPTION)
+	make_from_other(a_other:CAIRO_FONT_OPTIONS)
 			-- Initialization of `Current' copying `a_other'
 		do
 			make ({CAIRO_EXTERNALS}.cairo_font_options_copy(a_other.item))
@@ -59,7 +59,7 @@ feature -- Access
 
 feature -- Settings
 
-	merge(a_other:CAIRO_FONT_OPTION)
+	merge(a_other:CAIRO_FONT_OPTIONS)
 			-- Merges non-default options from `a_other' to `Current', replacing existing values.
 		require
 			Is_Valid: is_valid and a_other.is_valid
