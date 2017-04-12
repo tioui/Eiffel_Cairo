@@ -9,6 +9,9 @@ class
 
 inherit
 	CAIRO_INTERNAL_CONTAINER[CAIRO_TEXT_CLUSTER]
+		rename
+			make_from_pointer as make_container_from_pointer
+		end
 
 create {CAIRO_ANY}
 	make_from_pointer
@@ -28,7 +31,45 @@ feature {NONE} -- Initialization
 				count := a_count
 			end
 			compare_objects
+			flag_backward := 0
 		end
+
+	make_from_pointer(a_pointer:POINTER; a_count, a_flag_backward:INTEGER)
+			-- Initialization of `Current' using `a_pointer' as
+			-- `pointer' and `a_count' as `count'
+		require
+			a_count > 0
+			Pointer_Not_Null: not a_pointer.is_default_pointer
+		do
+			make_container_from_pointer(a_pointer, a_count)
+			flag_backward := a_flag_backward
+		end
+
+feature -- Status report
+
+	is_backward:BOOLEAN
+			-- The clusters in the cluster array map to glyphs in the
+			-- glyph array from end to start.
+		do
+			Result := flag_backward = {CAIRO_EXTERNALS}.CAIRO_TEXT_CLUSTER_FLAG_BACKWARD
+		end
+
+	enable_backward
+			-- Set `is_backward' to `True'
+		do
+			flag_backward := {CAIRO_EXTERNALS}.CAIRO_TEXT_CLUSTER_FLAG_BACKWARD
+		end
+
+	disable_backward
+			-- Set `is_backward' to `False'
+		do
+			flag_backward := 0
+		end
+
+feature {CAIRO_ANY} -- Implementation
+
+	flag_backward:INTEGER
+			-- The internal representation of `is_backward'
 
 feature {NONE} -- Implementation
 

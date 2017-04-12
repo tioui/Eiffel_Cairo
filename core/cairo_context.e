@@ -44,6 +44,7 @@ feature {NONE} -- Initialization
 				error_code := {CAIRO_EXTERNALS}.cairo_status(item)
 				is_valid := is_success
 			end
+			create utf_converter
 		ensure
 			Surface_assign:surface~ a_surface
 			Item_Valid: not item.is_default_pointer
@@ -1066,10 +1067,9 @@ feature -- Access
 		require
 			Is_Valid:is_valid
 		local
-			l_converter:UTF_CONVERTER
 			l_c_pointer:C_STRING
 		do
-			create l_c_pointer.make (l_converter.string_32_to_utf_8_string_8 (a_text.to_string_32))
+			create l_c_pointer.make (utf_converter.string_32_to_utf_8_string_8 (a_text.to_string_32))
 			{CAIRO_EXTERNALS}.cairo_text_path(item, l_c_pointer.item)
 		end
 
@@ -1165,6 +1165,7 @@ feature -- Access
 			Is_Valid:is_valid
 		do
 			create Result.make({CAIRO_EXTERNALS}.cairo_get_font_face(item))
+			error_code := {CAIRO_EXTERNALS}.cairo_status(item)
 		end
 
 	set_font_face(a_face:CAIRO_FONT_FACE)
@@ -1175,8 +1176,93 @@ feature -- Access
 			{CAIRO_EXTERNALS}.cairo_set_font_face(item, a_face.item)
 		end
 
+	scaled_font:CAIRO_SCALED_FONT assign set_scaled_font
+			-- The scalsed font associated in `Current'
+		require
+			Is_Valid:is_valid
+		do
+			create Result.make_from_item ({CAIRO_EXTERNALS}.cairo_get_scaled_font(item))
+			error_code := {CAIRO_EXTERNALS}.cairo_status(item)
+		end
 
+	set_scaled_font(a_font:CAIRO_SCALED_FONT)
+			-- Assign `scaled_font' with the value of `a_font'
+		require
+			Is_Valid:is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_set_scaled_font(item, a_font.item)
+		end
 
+	show_text(a_text:READABLE_STRING_GENERAL)
+			-- Draw `a_text' on `Current' according to the current `font_face',
+			-- `font_matrix' and `font_options'.
+			-- This feature is part of the "toy" text API.
+		require
+			Is_Valid:is_valid
+		local
+			l_c_text:C_STRING
+		do
+			create l_c_text.make (utf_converter.string_32_to_utf_8_string_8 (a_text.to_string_32))
+			{CAIRO_EXTERNALS}.cairo_show_text(item, l_c_text.item)
+		end
+
+	show_glyphs(a_glyphs:CAIRO_GLYPHS_CONTAINER)
+			-- A drawing operator that generates the shape from `a_glyphs'
+			-- rendered according to the current `font_face', `font_matrix'
+			-- and `font_options'
+		require
+			Is_Valid:is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_show_glyphs(item, a_glyphs.item_pointer, a_glyphs.count)
+		end
+
+	show_text_glyphs(
+						a_text:READABLE_STRING_GENERAL;
+						a_glyphs:CAIRO_GLYPHS_CONTAINER;
+						a_clusters:CAIRO_TEXT_CLUSTERS_CONTAINER
+					)
+				-- Render similar to `show_glyphs', but if the `surface'
+				-- support it, used `a_text' and `a_clusters' to embed
+				-- the text with the glpyphs showed.
+		require
+			Is_Valid:is_valid
+		local
+			l_c_text:C_STRING
+		do
+			create l_c_text.make (utf_converter.string_32_to_utf_8_string_8 (a_text.to_string_32))
+			{CAIRO_EXTERNALS}.cairo_show_text_glyphs(
+												item, l_c_text.item, -1,
+												a_glyphs.item_pointer,
+												a_glyphs.count,
+												a_clusters.item_pointer,
+												a_clusters.count,
+												a_clusters.flag_backward
+											)
+		end
+
+	text_extents(a_text:READABLE_STRING_GENERAL):CAIRO_TEXT_EXTENTS
+			-- The extents of `a_text' using `Current'
+		require
+			Is_Valid: is_valid
+		local
+			l_c_text:C_STRING
+		do
+			create l_c_text.make (utf_converter.string_32_to_utf_8_string_8 (a_text.to_string_32))
+			create Result
+			{CAIRO_EXTERNALS}.cairo_text_extents(item, l_c_text.item, Result.item)
+		end
+
+	glyph_extents(a_glyphs:CAIRO_GLYPHS_CONTAINER):CAIRO_TEXT_EXTENTS
+			-- The extents of `a_glyphs' using `Current'
+		require
+			Is_Valid: is_valid
+		do
+			create Result
+			{CAIRO_EXTERNALS}.cairo_glyph_extents(
+									item, a_glyphs.item_pointer,
+									a_glyphs.count, Result.item
+								)
+		end
 
 
 feature {NONE} -- Implementation
@@ -1186,5 +1272,8 @@ feature {NONE} -- Implementation
 		do
 			{CAIRO_EXTERNALS}.cairo_destroy(item)
 		end
+
+	utf_converter:UTF_CONVERTER
+			-- Used to convert {STRING_32} and {STRING_8} to UTF-8
 
 end

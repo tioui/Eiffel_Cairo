@@ -1052,6 +1052,90 @@ feature -- Functions
 			"cairo_get_font_face"
 		end
 
+	frozen cairo_set_scaled_font(a_cr, a_scaled_font:POINTER)
+		external
+			"C (cairo_t *, const cairo_scaled_font_t *) | <cairo.h>"
+		alias
+			"cairo_set_scaled_font"
+		end
+
+	frozen cairo_get_scaled_font(a_cr:POINTER):POINTER
+		external
+			"C (cairo_t *) : cairo_scaled_font_t * | <cairo.h>"
+		alias
+			"cairo_get_scaled_font"
+		end
+
+	frozen cairo_show_text(a_cr, a_utf8:POINTER)
+		external
+			"C (cairo_t *, const char *) | <cairo.h>"
+		alias
+			"cairo_show_text"
+		end
+
+	frozen cairo_show_glyphs(a_cr, a_glyphs:POINTER; a_num_glyphs:INTEGER)
+		external
+			"C (cairo_t *, const cairo_glyph_t *, int) | <cairo.h>"
+		alias
+			"cairo_show_glyphs"
+		end
+
+	frozen cairo_show_text_glyphs(
+					a_cr, a_utf8:POINTER;
+					a_utf8_len:INTEGER;
+					a_glyphs:POINTER;
+					a_num_glyphs:INTEGER;
+					a_clusters:POINTER;
+					a_num_clusters, a_cluster_flags:INTEGER
+				)
+		external
+			"C (cairo_t *, const char *, int, const cairo_glyph_t *, int, const cairo_text_cluster_t *, int, int) | <cairo.h>"
+		alias
+			"cairo_show_text_glyphs"
+		end
+
+	frozen cairo_text_extents(a_cr, a_utf8, a_extents:POINTER)
+		external
+			"C (cairo_t *, const char *, cairo_text_extents_t *) | <cairo.h>"
+		alias
+			"cairo_text_extents"
+		end
+
+	frozen cairo_glyph_extents(a_cr, a_glyphs:POINTER; a_num_glyphs:INTEGER; a_extents:POINTER)
+		external
+			"C (cairo_t *, const cairo_glyph_t *, int, cairo_text_extents_t *) | <cairo.h>"
+		alias
+			"cairo_glyph_extents"
+		end
+
+	frozen cairo_toy_font_face_create(a_family:POINTER; a_slant, a_weight:INTEGER):POINTER
+		external
+			"C (const char *, cairo_font_slant_t, cairo_font_weight_t) : cairo_font_face_t * | <cairo.h>"
+		alias
+			"cairo_toy_font_face_create"
+		end
+
+	frozen cairo_toy_font_face_get_family(a_font_face:POINTER):POINTER
+		external
+			"C (cairo_font_face_t *) : const char * | <cairo.h>"
+		alias
+			"cairo_toy_font_face_get_family"
+		end
+
+	frozen cairo_toy_font_face_get_slant(a_font_face:POINTER):INTEGER
+		external
+			"C (cairo_font_face_t *) : cairo_font_slant_t | <cairo.h>"
+		alias
+			"cairo_toy_font_face_get_slant"
+		end
+
+	frozen cairo_toy_font_face_get_weight(a_font_face:POINTER):INTEGER
+		external
+			"C (cairo_font_face_t *) : cairo_font_weight_t | <cairo.h>"
+		alias
+			"cairo_toy_font_face_get_weight"
+		end
+
 	frozen cairo_scaled_font_create(a_font_face, a_font_matrix, a_ctm, a_options:POINTER):POINTER
 		external
 			"C (cairo_font_face_t *, const cairo_matrix_t *, const cairo_matrix_t *, const cairo_font_options_t *) : cairo_scaled_font_t * | <cairo.h>"
@@ -2825,6 +2909,41 @@ feature -- Constants
 			"C [macro <cairo.h>] : cairo_text_cluster_flags_t"
 		alias
 			"CAIRO_TEXT_CLUSTER_FLAG_BACKWARD"
+		end
+
+	frozen CAIRO_FONT_SLANT_NORMAL : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_font_slant_t"
+		alias
+			"CAIRO_FONT_SLANT_NORMAL"
+		end
+
+	frozen CAIRO_FONT_SLANT_ITALIC : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_font_slant_t"
+		alias
+			"CAIRO_FONT_SLANT_ITALIC"
+		end
+
+	frozen CAIRO_FONT_SLANT_OBLIQUE : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_font_slant_t"
+		alias
+			"CAIRO_FONT_SLANT_OBLIQUE"
+		end
+
+	frozen CAIRO_FONT_WEIGHT_NORMAL : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_font_weight_t"
+		alias
+			"CAIRO_FONT_WEIGHT_NORMAL"
+		end
+
+	frozen CAIRO_FONT_WEIGHT_BOLD : INTEGER
+		external
+			"C [macro <cairo.h>] : cairo_font_weight_t"
+		alias
+			"CAIRO_FONT_WEIGHT_BOLD"
 		end
 
 end
