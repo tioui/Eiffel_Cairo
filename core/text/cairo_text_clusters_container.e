@@ -14,9 +14,7 @@ inherit
 		end
 
 create {CAIRO_ANY}
-	make_from_pointer
-
-create
+	make_from_pointer,
 	make
 
 feature {NONE} -- Initialization
@@ -32,9 +30,10 @@ feature {NONE} -- Initialization
 			end
 			compare_objects
 			flag_backward := 0
+			create text_c.make_empty (0)
 		end
 
-	make_from_pointer(a_pointer:POINTER; a_count, a_flag_backward:INTEGER)
+	make_from_pointer(a_pointer:POINTER; a_count, a_flag_backward:INTEGER; a_text:C_STRING)
 			-- Initialization of `Current' using `a_pointer' as
 			-- `pointer' and `a_count' as `count'
 		require
@@ -43,6 +42,7 @@ feature {NONE} -- Initialization
 		do
 			make_container_from_pointer(a_pointer, a_count)
 			flag_backward := a_flag_backward
+			text_c := a_text
 		end
 
 feature -- Status report
@@ -54,22 +54,21 @@ feature -- Status report
 			Result := flag_backward = {CAIRO_EXTERNALS}.CAIRO_TEXT_CLUSTER_FLAG_BACKWARD
 		end
 
-	enable_backward
-			-- Set `is_backward' to `True'
+	text:STRING_32
+			-- The text that is used to create `Current'
+		local
+			l_utf_converter:UTF_CONVERTER
 		do
-			flag_backward := {CAIRO_EXTERNALS}.CAIRO_TEXT_CLUSTER_FLAG_BACKWARD
-		end
-
-	disable_backward
-			-- Set `is_backward' to `False'
-		do
-			flag_backward := 0
+			Result := l_utf_converter.utf_8_string_8_to_string_32 (text_c.string)
 		end
 
 feature {CAIRO_ANY} -- Implementation
 
 	flag_backward:INTEGER
-			-- The internal representation of `is_backward'
+			-- The internal representation of `text'
+
+	text_c:C_STRING
+			-- The internal representation of `Current'
 
 feature {NONE} -- Implementation
 

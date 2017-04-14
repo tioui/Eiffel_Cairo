@@ -16,7 +16,8 @@ inherit
 create
 	make,
 	make_similar,
-	make_with_pixel_buffer
+	make_with_pixel_buffer,
+	make_from_png_file
 
 feature {NONE} -- Implementation
 
@@ -80,6 +81,26 @@ feature {NONE} -- Implementation
 			Is_Format_Assign: is_valid implies pixel_format ~ a_pixel_format
 			Is_Width_Assign: is_valid implies width ~ a_width
 			Is_Height_Assign: is_valid implies height ~ a_height
+		end
+
+	make_from_png_file(a_file_name:READABLE_STRING_GENERAL)
+			-- Initialization of `Current' using the data in
+			-- the png file `a_file_name'.
+		require
+			File_Name_Not_Empty:not a_file_name.is_empty
+		local
+			l_utf_converter:UTF_CONVERTER
+			l_c_filename:C_STRING
+		do
+			create l_utf_converter
+			create l_c_filename.make (l_utf_converter.string_32_to_utf_8_string_8 (a_file_name.to_string_32))
+			item := {CAIRO_EXTERNALS}.cairo_image_surface_create_from_png(l_c_filename.item)
+			if not item.is_default_pointer then
+				check_for_error
+				is_valid := is_success
+			end
+		ensure
+			Is_Created: not item.is_default_pointer
 		end
 
 feature -- Access

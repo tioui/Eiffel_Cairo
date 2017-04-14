@@ -1,6 +1,6 @@
 note
 	description: "[
-				Contains the current state of the rendering device, including 
+				Contains the current state of the rendering device, including
 				coordinates of yet to be drawn shapes.
 			]"
 	author: "Louis Marchand"
@@ -1045,20 +1045,12 @@ feature -- Access
 			{CAIRO_EXTERNALS}.cairo_rectangle(item, a_x, a_y, a_width, a_height)
 		end
 
-	glyph_path(a_glyphs:CHAIN[CAIRO_GLYPH])
-			-- Adds closed paths for the `a_glyphs' to the current path.
+	glyph_path(a_glyphs:CAIRO_GLYPHS_CONTAINER)
+			-- Add closed paths for the `a_glyphs' to the current path.
 		require
 			Is_Valid:is_valid
-		local
-			l_array:ARRAYED_LIST[POINTER]
-			l_array_c:ANY
 		do
-			create l_array.make (a_glyphs.count)
-			across a_glyphs as la_glyphs loop
-				l_array.extend (la_glyphs.item.item)
-			end
-			l_array_c := l_array.to_array.to_c
-			{CAIRO_EXTERNALS}.cairo_glyph_path(item, $l_array_c, a_glyphs.count)
+			{CAIRO_EXTERNALS}.cairo_glyph_path(item, a_glyphs.item_pointer, a_glyphs.count)
 		end
 
 	text_path(a_text:READABLE_STRING_GENERAL)
@@ -1126,7 +1118,8 @@ feature -- Access
 		require
 			Is_Valid:is_valid
 		do
-			create Result.make_from_item({CAIRO_EXTERNALS}.cairo_get_font_matrix(item))
+			create Result
+			{CAIRO_EXTERNALS}.cairo_get_font_matrix(item, Result.item)
 		end
 
 
@@ -1217,21 +1210,17 @@ feature -- Access
 		end
 
 	show_text_glyphs(
-						a_text:READABLE_STRING_GENERAL;
 						a_glyphs:CAIRO_GLYPHS_CONTAINER;
 						a_clusters:CAIRO_TEXT_CLUSTERS_CONTAINER
 					)
 				-- Render similar to `show_glyphs', but if the `surface'
-				-- support it, used `a_text' and `a_clusters' to embed
-				-- the text with the glpyphs showed.
+				-- support it, used `a_clusters' to embed
+				-- the text with the glyphs showed.
 		require
 			Is_Valid:is_valid
-		local
-			l_c_text:C_STRING
 		do
-			create l_c_text.make (utf_converter.string_32_to_utf_8_string_8 (a_text.to_string_32))
 			{CAIRO_EXTERNALS}.cairo_show_text_glyphs(
-												item, l_c_text.item, -1,
+												item, a_clusters.text_c.item, -1,
 												a_glyphs.item_pointer,
 												a_glyphs.count,
 												a_clusters.item_pointer,
@@ -1263,6 +1252,139 @@ feature -- Access
 									a_glyphs.count, Result.item
 								)
 		end
+
+	translate(a_x, a_y:REAL_64)
+			-- Modifies the `transformation_matrix'
+			-- by translating the user-space origin by
+			-- `a_x' (horizontally), `a_y' (vertically)
+		require
+			Is_Valid: is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_translate(item, a_x, a_y)
+		end
+
+	scale(a_x, a_y:REAL_64)
+			-- Modifies the `transformation_matrix'
+			-- by scaling the user-space origin by
+			-- `a_x' (horizontally), `a_y' (vertically)
+		require
+			Is_Valid: is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_scale(item, a_x, a_y)
+		end
+
+	rotate(a_angle:REAL_64)
+			-- Modifies the `transformation_matrix'
+			-- by rotating the user-space axes by `a_angle' radians
+		require
+			Is_Valid: is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_rotate(item, a_angle)
+		end
+
+	transform(a_matrix:CAIRO_TRANSFORMATION_MATRIX)
+			-- Modifies the `transformation_matrix'
+			-- by applying `a_matrix' as an additional transformation.
+		require
+			Is_Valid: is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_transform(item, a_matrix.item)
+		end
+
+	transformation_matrix:CAIRO_TRANSFORMATION_MATRIX assign set_transformation_matrix
+			-- The current transformation matrix (CTM)
+		require
+			Is_Valid: is_valid
+		do
+			create Result
+			{CAIRO_EXTERNALS}.cairo_get_matrix(item, Result.item)
+		end
+
+	set_transformation_matrix(a_matrix:CAIRO_TRANSFORMATION_MATRIX)
+			-- Assign `transformation_matrix' with the value of `a_matrix'
+		require
+			Is_Valid: is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_set_matrix(item, a_matrix.item)
+		ensure
+			Is_Assign: transformation_matrix ~ a_matrix
+		end
+
+	identity_matrix
+			-- Set the `transformation_matrix' to the identity matrix
+		require
+			Is_Valid: is_valid
+		do
+			{CAIRO_EXTERNALS}.cairo_identity_matrix(item)
+		end
+
+	user_to_device(a_x, a_y:REAL_64):TUPLE[x, y:REAL_64]
+			-- Transform the coordinate (`a_x',`a_y') from user space
+			-- to device space by multiplying the given point by
+			-- `transformation_matrix'.
+		require
+			Is_Valid: is_valid
+		local
+			l_x, l_y:REAL_64
+		do
+			l_x := a_x
+			l_y := a_y
+			{CAIRO_EXTERNALS}.cairo_user_to_device(item, $a_x, $a_y)
+			Result := [l_x, l_y]
+		end
+
+	user_to_device_distance(a_x, a_y:REAL_64):TUPLE[x, y:REAL_64]
+			-- Transform the distance vector (`a_x',`a_y') from user space
+			-- to device space by multiplying the given point by
+			-- `transformation_matrix'.
+			-- This function is similar to `user_to_device' except that
+			-- the translation components of the `transformation_matrix'
+			-- will be ignored.
+		require
+			Is_Valid: is_valid
+		local
+			l_x, l_y:REAL_64
+		do
+			l_x := a_x
+			l_y := a_y
+			{CAIRO_EXTERNALS}.cairo_user_to_device_distance(item, $a_x, $a_y)
+			Result := [l_x, l_y]
+		end
+
+	device_to_user(a_x, a_y:REAL_64):TUPLE[x, y:REAL_64]
+			-- Transform the coordinate (`a_x',`a_y') from device space
+			-- to user space by multiplying the given point by the
+			-- inverse `transformation_matrix'.
+		require
+			Is_Valid: is_valid
+		local
+			l_x, l_y:REAL_64
+		do
+			l_x := a_x
+			l_y := a_y
+			{CAIRO_EXTERNALS}.cairo_device_to_user(item, $a_x, $a_y)
+			Result := [l_x, l_y]
+		end
+
+	device_to_user_distance(a_x, a_y:REAL_64):TUPLE[x, y:REAL_64]
+			-- Transform the distance vector (`a_x',`a_y') from device space
+			-- to user space by multiplying the given point by the
+			-- inverse `transformation_matrix'.
+			-- This function is similar to `device_to_user' except that
+			-- the translation components of the `transformation_matrix'
+			-- will be ignored.
+		require
+			Is_Valid: is_valid
+		local
+			l_x, l_y:REAL_64
+		do
+			l_x := a_x
+			l_y := a_y
+			{CAIRO_EXTERNALS}.cairo_device_to_user_distance(item, $a_x, $a_y)
+			Result := [l_x, l_y]
+		end
+
+
 
 
 feature {NONE} -- Implementation

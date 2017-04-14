@@ -244,6 +244,19 @@ feature -- Access
 			Result := {CAIRO_EXTERNALS}.cairo_surface_has_show_text_glyphs(item)
 		end
 
+	save_to_png(a_file_name:READABLE_STRING_GENERAL)
+			-- Save the data of `Current' in the png file `a_file_name'.
+		require
+			File_Name_Not_Empty:not a_file_name.is_empty
+		local
+			l_utf_converter:UTF_CONVERTER
+			l_c_filename:C_STRING
+		do
+			create l_utf_converter
+			create l_c_filename.make (l_utf_converter.string_32_to_utf_8_string_8 (a_file_name.to_string_32))
+			error_code := {CAIRO_EXTERNALS}.cairo_surface_write_to_png(item, l_c_filename.item)
+		end
+
 feature {NONE} -- Implementation
 
 	check_for_error

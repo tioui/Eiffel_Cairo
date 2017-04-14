@@ -16,6 +16,20 @@ feature -- Functions
 			"cairo_image_surface_create"
 		end
 
+	frozen cairo_image_surface_create_from_png(a_filename:POINTER):POINTER
+		external
+			"C (const char *) : cairo_surface_t * | <cairo.h>"
+		alias
+			"cairo_image_surface_create_from_png"
+		end
+
+	frozen cairo_surface_write_to_png(a_surface, a_filename:POINTER):INTEGER
+		external
+			"C (cairo_surface_t *, const char *) : cairo_status_t | <cairo.h>"
+		alias
+			"cairo_surface_write_to_png"
+		end
+
 	frozen cairo_image_surface_create_for_data(a_data:POINTER; a_format, a_width, a_height, a_stride:INTEGER):POINTER
 		external
 			"C (unsigned char *, cairo_format_t, int, int, int) : cairo_surface_t * | <cairo.h>"
@@ -245,6 +259,13 @@ feature -- Functions
 			"C (cairo_font_face_t *) : cairo_font_face_t * | <cairo.h>"
 		alias
 			"cairo_font_face_reference"
+		end
+
+	frozen cairo_font_face_get_reference_count(a_font_face:POINTER) : NATURAL
+		external
+			"C (cairo_font_face_t *) : unsigned int | <cairo.h>"
+		alias
+			"cairo_font_face_get_reference_count"
 		end
 
 	frozen cairo_font_face_destroy(a_font_face:POINTER)
@@ -497,6 +518,20 @@ feature -- Functions
 			"C (cairo_surface_t *, double, double) | <cairo-pdf.h>"
 		alias
 			"cairo_pdf_surface_set_size"
+		end
+
+	frozen cairo_svg_surface_create(a_filename:POINTER; a_width_in_points, a_height_in_points:REAL_64) : POINTER
+		external
+			"C (const char *, double, double) : cairo_surface_t * | <cairo-svg.h>"
+		alias
+			"cairo_svg_surface_create"
+		end
+
+	frozen cairo_svg_surface_restrict_to_version(a_surface:POINTER; a_version:INTEGER)
+		external
+			"C (cairo_surface_t *, cairo_svg_version_t) | <cairo-svg.h>"
+		alias
+			"cairo_svg_surface_restrict_to_version"
 		end
 
 	frozen cairo_create(a_surface:POINTER) : POINTER
@@ -1017,9 +1052,9 @@ feature -- Functions
 			"cairo_set_font_matrix"
 		end
 
-	frozen cairo_get_font_matrix(a_cr:POINTER):POINTER
+	frozen cairo_get_font_matrix(a_cr, a_matrix:POINTER)
 		external
-			"C (cairo_t *) : cairo_matrix_t * | <cairo.h>"
+			"C (cairo_t *, cairo_matrix_t *) | <cairo.h>"
 		alias
 			"cairo_get_font_matrix"
 		end
@@ -1106,6 +1141,83 @@ feature -- Functions
 			"C (cairo_t *, const cairo_glyph_t *, int, cairo_text_extents_t *) | <cairo.h>"
 		alias
 			"cairo_glyph_extents"
+		end
+
+	frozen cairo_translate(a_cr:POINTER; a_tx, a_ty:REAL_64)
+		external
+			"C (cairo_t *, double, double) | <cairo.h>"
+		alias
+			"cairo_translate"
+		end
+
+	frozen cairo_scale(a_cr:POINTER; a_sx, a_sy:REAL_64)
+		external
+			"C (cairo_t *, double, double) | <cairo.h>"
+		alias
+			"cairo_scale"
+		end
+
+	frozen cairo_rotate(a_cr:POINTER; a_angle:REAL_64)
+		external
+			"C (cairo_t *, double) | <cairo.h>"
+		alias
+			"cairo_rotate"
+		end
+
+	frozen cairo_transform(a_cr, a_matrix:POINTER)
+		external
+			"C (cairo_t *, const cairo_matrix_t *) | <cairo.h>"
+		alias
+			"cairo_transform"
+		end
+
+	frozen cairo_set_matrix(a_cr, a_matrix:POINTER)
+		external
+			"C (cairo_t *, const cairo_matrix_t *) | <cairo.h>"
+		alias
+			"cairo_set_matrix"
+		end
+
+	frozen cairo_get_matrix(a_cr, a_matrix:POINTER)
+		external
+			"C (cairo_t *, cairo_matrix_t *) | <cairo.h>"
+		alias
+			"cairo_get_matrix"
+		end
+
+	frozen cairo_identity_matrix(a_cr:POINTER)
+		external
+			"C (cairo_t *) | <cairo.h>"
+		alias
+			"cairo_identity_matrix"
+		end
+
+	frozen cairo_user_to_device(a_cr, a_x, a_:POINTER)
+		external
+			"C (cairo_t *, double *, double *) | <cairo.h>"
+		alias
+			"cairo_user_to_device"
+		end
+
+	frozen cairo_user_to_device_distance(a_cr, a_x, a_:POINTER)
+		external
+			"C (cairo_t *, double *, double *) | <cairo.h>"
+		alias
+			"cairo_user_to_device_distance"
+		end
+
+	frozen cairo_device_to_user(a_cr, a_x, a_:POINTER)
+		external
+			"C (cairo_t *, double *, double *) | <cairo.h>"
+		alias
+			"cairo_device_to_user"
+		end
+
+	frozen cairo_device_to_user_distance(a_cr, a_x, a_:POINTER)
+		external
+			"C (cairo_t *, double *, double *) | <cairo.h>"
+		alias
+			"cairo_device_to_user_distance"
 		end
 
 	frozen cairo_toy_font_face_create(a_family:POINTER; a_slant, a_weight:INTEGER):POINTER
@@ -2944,6 +3056,20 @@ feature -- Constants
 			"C [macro <cairo.h>] : cairo_font_weight_t"
 		alias
 			"CAIRO_FONT_WEIGHT_BOLD"
+		end
+
+	frozen CAIRO_SVG_VERSION_1_1 : INTEGER
+		external
+			"C [macro <cairo-svg.h>] : cairo_svg_version_t"
+		alias
+			"CAIRO_SVG_VERSION_1_1"
+		end
+
+	frozen CAIRO_SVG_VERSION_1_2 : INTEGER
+		external
+			"C [macro <cairo-svg.h>] : cairo_svg_version_t"
+		alias
+			"CAIRO_SVG_VERSION_1_2"
 		end
 
 end

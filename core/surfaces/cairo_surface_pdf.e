@@ -23,12 +23,8 @@ feature {NONE} -- Initialization
 			l_converter:UTF_CONVERTER
 		do
 			create l_converter
-			if a_filename.is_string_32 then
-				create l_c_filename.make (l_converter.string_32_to_utf_8_string_8 (a_filename.as_string_32))
-			else
-				create l_c_filename.make (a_filename)
-			end
-			item := {CAIRO_EXTERNALS}.cairo_pdf_surface_create(item, a_width, a_height)
+			create l_c_filename.make (l_converter.string_32_to_utf_8_string_8 (a_filename.to_string_32))
+			item := {CAIRO_EXTERNALS}.cairo_pdf_surface_create(l_c_filename.item, a_width, a_height)
 			if not item.is_default_pointer then
 				check_for_error
 				is_valid := is_success
@@ -46,7 +42,7 @@ feature -- Access
 		end
 
 	restrict_to_version_1_5
-			-- Restricts the generated PDF file to version 1.4
+			-- Restricts the generated PDF file to version 1.5
 		do
 			{CAIRO_EXTERNALS}.cairo_pdf_surface_restrict_to_version(item, {CAIRO_EXTERNALS}.CAIRO_PDF_VERSION_1_5)
 		end

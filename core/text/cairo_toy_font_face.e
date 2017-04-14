@@ -3,7 +3,7 @@ note
 					The {CAIRO_FONT_FACE} by default in the library.
 					This class is part of the "toy" text API.
 					For a real font management, used a different backend.
-				
+
 				]"
 	author: "Louis Marchand"
 	date: "Tue, 11 Apr 2017 15:55:10 +0000"
@@ -21,7 +21,10 @@ inherit
 		end
 
 create
-	default_create
+	default_create,
+	make,
+	make_italic,
+	make_oblique
 
 feature {NONE} -- Initialization
 

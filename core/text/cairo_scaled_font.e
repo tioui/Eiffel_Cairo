@@ -143,8 +143,8 @@ feature -- Access
 		end
 
 	text_to_glyphs(a_text:READABLE_STRING_GENERAL; a_x, a_y:REAL_64): TUPLE[
-															a_glyphs:CAIRO_GLYPHS_CONTAINER;
-															a_clusters:CAIRO_TEXT_CLUSTERS_CONTAINER
+															glyphs:CAIRO_GLYPHS_CONTAINER;
+															clusters:CAIRO_TEXT_CLUSTERS_CONTAINER
 														]
 			-- Converts UTF-8 text to an array of glyphs, optionally with cluster
 			-- mapping, that can be used to render `a_text'. `a_x' represent the
@@ -171,7 +171,7 @@ feature -- Access
 			then
 				Result := [
 							create {CAIRO_GLYPHS_CONTAINER}.make_from_pointer (l_glyphs_pointer, l_glyphs_count),
-							create {CAIRO_TEXT_CLUSTERS_CONTAINER}.make_from_pointer (l_clusters_pointer, l_clusters_count, l_cluster_flags)
+							create {CAIRO_TEXT_CLUSTERS_CONTAINER}.make_from_pointer (l_clusters_pointer, l_clusters_count, l_cluster_flags, l_c_string)
 						]
 			else
 				Result := [
