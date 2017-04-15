@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-16-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-16-0 http://www.eiffel.com/developers/xml/configuration-1-16-0.xsd" name="stream_texture" uuid="6A7DEAEA-5512-468B-A81B-4EE6238D7394">
+	<target name="stream_texture">
+		<root class="GAME2_APPLICATION" feature="make"/>
+		<file_rule>
+			<exclude>/CVS$</exclude>
+			<exclude>/EIFGENs$</exclude>
+			<exclude>/\.git$</exclude>
+			<exclude>/\.svn$</exclude>
+		</file_rule>
+		<option warning="true">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<capability>
+			<catcall_detection support="none"/>
+			<concurrency support="none"/>
+			<void_safety support="all"/>
+		</capability>
+		<precompile name="base_pre" location="$ISE_PRECOMP\base-safe.ecf"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
+		<library name="eiffel_cairo" location="$ISE_LIBRARY\contrib\library\cairo\core\eiffel_cairo.ecf"/>
+		<library name="eiffel_cairo_game" location="$ISE_LIBRARY\contrib\library\cairo\game\eiffel_cairo_game.ecf"/>
+		<library name="game_core" location="$ISE_LIBRARY\contrib\library\game2\game_core\game_core-safe.ecf"/>
+		<cluster name="stream_texture" location=".\" recursive="true"/>
+	</target>
+</system>
