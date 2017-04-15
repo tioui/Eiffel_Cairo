@@ -22,7 +22,6 @@ feature {NONE} -- Initialization
 			l_pixel_format:CAIRO_PIXEL_FORMAT
 			l_source, l_destination:CAIRO_SURFACE_IMAGE
 			l_context:CAIRO_CONTEXT
-			l_dashes:ARRAY[REAL_64]
 		do
 			create l_pixel_format.make_argb32
 			create l_source.make_from_png_file ("source.png")
