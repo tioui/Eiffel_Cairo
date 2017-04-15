@@ -1,3 +1,8 @@
 EIFGENs
 *.pdf
 *.o
+*.lib
+*.pdf
+*.png
+!examples/png_load_save/source.png
+C_lib_win

@@ -48,7 +48,7 @@ void free_font_face(font_face_disposer * a_face_disposer)
 	if (a_face_disposer->face != NULL)
 	{
 
-		library_disposer * l_library = a_face_disposer->library;
+		l_library = a_face_disposer->library;
 //		printf("Free font face\n");
 		FT_Done_Face(a_face_disposer->face);
 //		printf("Free key\n");
