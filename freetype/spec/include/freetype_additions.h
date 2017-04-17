@@ -3,7 +3,10 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include <cairo-ft.h>
-#include <stdbool.h>
+
+typedef int bool;
+#define false 0
+#define true 1
 
 struct library_disposer_struct;
 
