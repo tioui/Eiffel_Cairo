@@ -7,8 +7,8 @@
 			<exclude>/EIFGENs$</exclude>
 			<exclude>/\.git$</exclude>
 			<exclude>/\.svn$</exclude>
-			<exclude>/\spec$</exclude>
 			<exclude>/\Clib$</exclude>
+			<exclude>/\spec$</exclude>
 		</file_rule>
 		<option warning="true">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
@@ -24,6 +24,11 @@
 				<platform value="windows"/>
 			</condition>
 		</external_include>
+		<external_cflag value="`freetype-config --cflags`">
+			<condition>
+				<platform excluded_value="windows"/>
+			</condition>
+		</external_cflag>
 		<external_object location="$(EIFFEL_LIBRARY)\contrib\library\cairo\C_lib_win\freetype\lib\$(ISE_PLATFORM)\$(ISE_C_COMPILER)\libfreetype.dll.a">
 			<condition>
 				<platform value="windows"/>
@@ -46,27 +51,39 @@
 				<platform value="windows"/>
 				<concurrency value="none"/>
 				<dotnet value="false"/>
+				<custom name="ISE_C_COMPILER" value="mingw"/>
 			</condition>
 		</external_linker_flag>
 		<external_linker_flag value="'$(EIFFEL_LIBRARY)\contrib\library\cairo\freetype\spec\$(ISE_C_COMPILER)\$(ISE_PLATFORM)\lib\mtfreetype_additions.lib' '$(EIFFEL_LIBRARY)\contrib\library\cairo\C_lib_win\cairo\lib\$(ISE_PLATFORM)\$(ISE_C_COMPILER)\libcairo.dll.a'">
 			<condition>
 				<platform value="windows"/>
-				<concurrency excluded_value="none"/>
+				<concurrency value="none"/>
 				<dotnet value="false"/>
+				<custom name="ISE_C_COMPILER" value="mingw"/>
 			</condition>
 		</external_linker_flag>
-		<external_linker_flag value="'$(EIFFEL_LIBRARY)\contrib\library\cairo\freetype\spec\$(ISE_C_COMPILER)\$(ISE_PLATFORM)\lib\ilfreetype_additions.lib' '$(EIFFEL_LIBRARY)\contrib\library\cairo\C_lib_win\cairo\lib\$(ISE_PLATFORM)\$(ISE_C_COMPILER)\libcairo.dll.a'">
+		<external_object location="$(EIFFEL_LIBRARY)\contrib\library\cairo\freetype\spec\$(ISE_C_COMPILER)\$(ISE_PLATFORM)\lib\freetype_additions.lib">
+			<condition>
+				<platform value="windows"/>
+				<concurrency excluded_value="none"/>
+				<dotnet value="false"/>
+				<custom name="ISE_C_COMPILER" value="msc"/>
+			</condition>
+		</external_object>
+		<external_object location="$(EIFFEL_LIBRARY)\contrib\library\cairo\freetype\spec\$(ISE_C_COMPILER)\$(ISE_PLATFORM)\lib\mtfreetype_additions.lib">
+			<condition>
+				<platform value="windows"/>
+				<concurrency excluded_value="none"/>
+				<dotnet value="false"/>
+				<custom name="ISE_C_COMPILER" value="msc"/>
+			</condition>
+		</external_object>
+		<external_object location="$(EIFFEL_LIBRARY)\contrib\library\cairo\freetype\spec\$(ISE_C_COMPILER)\$(ISE_PLATFORM)\lib\ilfreetype_additions.lib">
 			<condition>
 				<platform value="windows"/>
 				<dotnet value="true"/>
 			</condition>
-		</external_linker_flag>
-
-		<external_cflag value="`freetype-config --cflags`">
-			<condition>
-				<platform excluded_value="windows"/>
-			</condition>
-		</external_cflag>
+		</external_object>
 		<external_linker_flag value="`freetype-config --libs`">
 			<condition>
 				<platform excluded_value="windows"/>
