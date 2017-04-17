@@ -45,7 +45,7 @@ feature -- Access
 	window:GAME_WINDOW_RENDERED
 			-- The window to draw the `texture'
 
-	texture:GAME_TEXTURE_STREAMING_CAIRO
+	texture:GAME_TEXTURE_CAIRO
 			-- the image to show on the `window'
 
 	on_iteration(a_timestamp:NATURAL)

@@ -27,11 +27,12 @@ create
 	make,
 	share_from_other,
 	make_from_other,
-	make_from_cairo,
+	make_from_cairo_pixel_buffer,
 	make_for_window,
 	make_for_display,
 	make_for_display_mode,
-	make_from_cairo_surface
+	make_from_cairo_surface,
+	make_for_pixel_format
 
 feature {NONE} -- Initialization
 
@@ -138,7 +139,7 @@ feature {NONE} -- Initialization
 			surface_make_is_open: has_error or is_open
 		end
 
-	make_from_cairo(a_pixel_buffer:CAIRO_PIXEL_BUFFER)
+	make_from_cairo_pixel_buffer(a_pixel_buffer:CAIRO_PIXEL_BUFFER)
 			-- Initialization of `Current' copying (and adapting) the data
 			-- in `a_pixel_buffer' inside `Current'
 		require
@@ -166,7 +167,7 @@ feature {NONE} -- Initialization
 		require
 			a_cairo_surface.pixel_buffer.pixel_format.is_argb32
 		do
-			make_from_cairo(a_cairo_surface.pixel_buffer)
+			make_from_cairo_pixel_buffer(a_cairo_surface.pixel_buffer)
 		end
 
 feature -- Access

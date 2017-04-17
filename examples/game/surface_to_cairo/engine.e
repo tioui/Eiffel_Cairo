@@ -30,6 +30,7 @@ feature {NONE} -- Initialization
 		do
 			game_library.enable_video
 			create l_window_builder
+			l_window_builder.set_dimension (300, 400)
 			window := l_window_builder.generate_window
 
 			create l_scene.make (create {CAIRO_PIXEL_FORMAT}.make_argb32, 200, 300)
@@ -81,8 +82,10 @@ feature -- Access
 		end
 
 	scene:GAME_TEXTURE
+			-- The scene to draw on the `window'
 
 	window:GAME_WINDOW_RENDERED
+			-- Where to draw the `scene'
 
 feature {NONE} -- Initialization
 
@@ -91,7 +94,7 @@ feature {NONE} -- Initialization
 		do
 			window.renderer.set_drawing_color (create {GAME_COLOR}.make_rgb (255, 255, 255))
 			window.renderer.clear
-			window.renderer.draw_texture (scene, 100, 100)
+			window.renderer.draw_texture (scene, 50, 50)
 			window.update
 		end
 

@@ -29,7 +29,7 @@ feature {NONE} -- Initialization
 			window := l_window_builder.generate_window
 			create l_game_pixel_format
 			l_game_pixel_format.set_argb8888
-			create game_surface.make (l_game_pixel_format, 50, 50)
+			create game_surface.make_for_pixel_format (l_game_pixel_format, 50, 50)
 		end
 
 feature -- Access
@@ -45,7 +45,7 @@ feature -- Access
 	window:GAME_WINDOW_SURFACED
 			-- The window to draw `game_surface'
 
-	game_surface:GAME_SURFACE_STREAMING_CAIRO
+	game_surface:GAME_SURFACE_CAIRO
 			-- The image to show on `window'
 
 	on_iteration(a_timestamp:NATURAL)

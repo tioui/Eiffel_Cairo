@@ -49,7 +49,7 @@ feature {NONE} -- Initialization
 
 			l_cairo_surface.show_page
 
-			create l_game_surface.make (l_cairo_surface.pixel_buffer)
+			create l_game_surface.make_from_cairo_surface (l_cairo_surface)
 
 			create l_window_builder
 			window := l_window_builder.generate_window
