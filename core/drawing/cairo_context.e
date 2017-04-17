@@ -1385,8 +1385,6 @@ feature -- Access
 		end
 
 
-
-
 feature {NONE} -- Implementation
 
 	dispose

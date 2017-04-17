@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-16-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-16-0 http://www.eiffel.com/developers/xml/configuration-1-16-0.xsd" name="surface_to_cairo" uuid="3DEAEDF2-94AA-4B0B-953A-39A8E3028BC1">
+	<target name="surface_to_cairo">
+		<root class="GAME2_APPLICATION" feature="make"/>
+		<option warning="true">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<capability>
+			<catcall_detection support="none"/>
+			<concurrency support="none" use="none"/>
+			<void_safety support="all"/>
+		</capability>
+		<precompile name="base_pre" location="$ISE_PRECOMP\base-safe.ecf"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
+		<library name="eiffel_cairo" location="$ISE_LIBRARY\contrib\library\cairo\core\eiffel_cairo.ecf"/>
+		<library name="eiffel_cairo_game" location="$ISE_LIBRARY\contrib\library\cairo\game\eiffel_cairo_game.ecf" readonly="true"/>
+		<library name="game_core" location="$EIFFEL_LIBRARY\contrib\library\game2\game_core\game_core-safe.ecf"/>
+		<library name="game_image_file" location="$EIFFEL_LIBRARY\contrib\library\game2\game_image_file\game_image_file-safe.ecf"/>
+		<cluster name="surface_to_cairo" location=".\" recursive="true">
+			<file_rule>
+				<exclude>/EIFGENs$</exclude>
+			</file_rule>
+		</cluster>
+	</target>
+</system>

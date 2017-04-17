@@ -8,7 +8,7 @@ note
 	revision: "0.1"
 
 class
-	GAME_TEXTURE_STREAMING_CAIRO
+	GAME_TEXTURE_CAIRO
 
 inherit
 	GAME_TEXTURE_STREAMING

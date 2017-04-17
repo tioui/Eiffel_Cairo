@@ -28,12 +28,12 @@ feature -- Access
 		deferred
 		end
 
-	cairo_surface:CAIRO_SURFACE_IMAGE
-			-- The {CAIRO_SURFACE} that will be streamed into `Current'
+	cairo_pixel_buffer:CAIRO_PIXEL_BUFFER
+			-- The {CAIRO_PIXEL_BUFFER} that will be streamed into `Current'
+			-- Do not work with alpha value
 		require
 			Is_Locked: is_locked
 		local
-			l_pixel_buffer:CAIRO_PIXEL_BUFFER
 			l_pixel_format:CAIRO_PIXEL_FORMAT
 			l_pixels:GAME_PIXEL_WRITER
 		do
@@ -45,9 +45,16 @@ feature -- Access
 				create l_pixel_format.make_rgb24
 			end
 			l_pixels := pixels
-			create l_pixel_buffer.share_from_pointer (l_pixel_format, l_pixels.item, l_pixels.width, l_pixels.height, l_pixels.pitch)
-			create Result.make_with_pixel_buffer (l_pixel_buffer)
+			create Result.share_from_pointer (l_pixel_format, l_pixels.item, l_pixels.width, l_pixels.height, l_pixels.pitch)
 		end
+
+	cairo_surface:CAIRO_SURFACE_IMAGE
+			-- The {CAIRO_SURFACE} that will be streamed into `Current'
+			-- Do not work with alpha value
+		do
+			create Result.make_with_pixel_buffer (cairo_pixel_buffer)
+		end
+
 
 invariant
 	Is_Pixel_Format_Valid: pixel_format.is_argb8888 or pixel_format.is_rgb565 or
