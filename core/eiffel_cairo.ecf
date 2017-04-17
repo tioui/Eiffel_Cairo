@@ -21,6 +21,16 @@
 				<platform value="unix"/>
 			</condition>
 		</external_linker_flag>
+		<external_include location="$(EIFFEL_LIBRARY)\contrib\library\cairo\C_lib_win\cairo\include">
+			<condition>
+				<platform value="windows"/>
+			</condition>
+		</external_include>
+		<external_object location="$(EIFFEL_LIBRARY)\contrib\library\cairo\C_lib_win\cairo\lib\$(ISE_PLATFORM)\$(ISE_C_COMPILER)\libcairo.dll.a">
+			<condition>
+				<platform value="windows"/>
+			</condition>
+		</external_object>
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
 		<cluster name="eiffel_cairo" location=".\" recursive="true"/>
 	</target>
