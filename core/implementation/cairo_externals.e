@@ -86,6 +86,13 @@ feature -- Functions
 			"cairo_surface_destroy"
 		end
 
+	frozen cairo_surface_get_reference_count(a_surface:POINTER):NATURAL
+		external
+			"C (cairo_surface_t *) : unsigned int | <cairo.h>"
+		alias
+			"cairo_surface_get_reference_count"
+		end
+
 	frozen cairo_image_surface_get_data(a_surface:POINTER):POINTER
 		external
 			"C (cairo_surface_t *) : unsigned char * | <cairo.h>"
@@ -1267,6 +1274,13 @@ feature -- Functions
 			"C (cairo_scaled_font_t *) | <cairo.h>"
 		alias
 			"cairo_scaled_font_destroy"
+		end
+
+	frozen cairo_scaled_font_get_reference_count(a_scaled_font:POINTER):NATURAL
+		external
+			"C (cairo_scaled_font_t *) : unsigned int | <cairo.h>"
+		alias
+			"cairo_scaled_font_get_reference_count"
 		end
 
 	frozen cairo_scaled_font_get_font_face(a_scaled_font:POINTER):POINTER

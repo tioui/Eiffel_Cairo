@@ -1,6 +1,11 @@
 # Eiffel_Cairo
 
-Note that this library is not working at the moment. Please come back later.
+Thi is a port of the Cairo graphics library (see: https://www.cairographics.org/).
+
+This library is still in beta, so expect it to have some bugs. Also, not every drivers are presently functionnal. You can use the "core" Cairo functionnality
+and PDF, SVG and Freetype drivers.
+
+You can also used this library with the Eiffel_Game2 library (see: https://github.com/tioui/Eiffel_Game2). 
 
 MIT License
 -----------

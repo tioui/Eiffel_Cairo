@@ -71,7 +71,7 @@ feature {NONE} -- Initialization
 		end
 
 	default_create
-			-- <Precursor>
+			-- Initialization of `Current'
 		do
 			make("", False)
 		ensure then

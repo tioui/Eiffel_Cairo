@@ -33,6 +33,8 @@ feature -- Access
 			-- Do not work with alpha value
 		require
 			Is_Locked: is_locked
+			Is_Pixel_Format_Valid: pixel_format.is_argb8888 or pixel_format.is_rgb565 or
+									pixel_format.is_argb2101010
 		local
 			l_pixel_format:CAIRO_PIXEL_FORMAT
 			l_pixels:GAME_PIXEL_WRITER
@@ -51,12 +53,12 @@ feature -- Access
 	cairo_surface:CAIRO_SURFACE_IMAGE
 			-- The {CAIRO_SURFACE} that will be streamed into `Current'
 			-- Do not work with alpha value
+		require
+			Is_Locked: is_locked
+			Is_Pixel_Format_Valid: pixel_format.is_argb8888 or pixel_format.is_rgb565 or
+									pixel_format.is_argb2101010
 		do
 			create Result.make_with_pixel_buffer (cairo_pixel_buffer)
 		end
 
-
-invariant
-	Is_Pixel_Format_Valid: pixel_format.is_argb8888 or pixel_format.is_rgb565 or
-									pixel_format.is_argb2101010
 end

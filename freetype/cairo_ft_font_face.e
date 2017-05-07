@@ -13,8 +13,6 @@ inherit
 			make as make_font_face
 		undefine
 			error_string
-		redefine
-			dispose
 		end
 	CAIRO_FT_ERROR
 		undefine
@@ -72,10 +70,4 @@ feature {NONE} -- Implementation
 
 	disposable_item:POINTER
 			-- The internal value of the disposable structure
-
-	dispose
-			-- <Precursor>
-		do
-			Precursor {CAIRO_FONT_FACE}
-		end
 end

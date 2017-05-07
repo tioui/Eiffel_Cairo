@@ -12,132 +12,23 @@ class
 
 inherit
 	GAME_SURFACE
-		rename
-			share_from_other as share_surface_from_other,
-			make_from_other as make_surface_from_other,
-			make_for_window as make_surface_for_window,
-			make_for_pixel_format as make_surface_for_pixel_format,
-			make_for_display as make_surface_for_display,
-			make as make_surface,
-			make_for_display_mode as make_surface_for_display_mode
-		end
 	GAME_CAIRO_STREAMING
 
 create
 	make,
+	share_from_image,
+	make_from_image,
 	share_from_other,
 	make_from_other,
-	make_from_cairo_pixel_buffer,
 	make_for_window,
 	make_for_display,
 	make_for_display_mode,
-	make_from_cairo_surface,
-	make_for_pixel_format
+	make_for_pixel_format,
+	make_with_masks,
+	make_from_cairo_pixel_buffer,
+	make_from_cairo_surface
 
 feature {NONE} -- Initialization
-
-	share_from_other(a_other:GAME_SURFACE)
-			-- Create a `Current' from `a_other'.
-			-- The image source in memory is not copied.
-			-- If multiple surface is done with the same `image',
-			-- every modification to surface will affect all.
-		require
-			Surface_Make_Video_Enabled: game_library.is_video_enable
-			Surface_Make_Other_Opened: a_other.is_open
-			Is_Pixel_Format_Valid: 	a_other.pixel_format.is_argb8888 or
-									a_other.pixel_format.is_rgb565 or
-									a_other.pixel_format.is_argb2101010
-		do
-			share_from_image(a_other.image)
-		ensure
-			Surface_Make_is_open: has_error or is_open
-		end
-
-	make_from_other(a_other:GAME_SURFACE)
-			-- Create a `Current' from `a_other'.
-			-- The image source in memory will be copied.
-			-- Slower than `share_from_other' and use more memory.
-		require
-			Surface_Make_Video_Enabled: game_library.is_video_enable
-			Surface_Make_Other_Opened: a_other.is_open
-			Is_Pixel_Format_Valid: 	a_other.pixel_format.is_argb8888 or
-									a_other.pixel_format.is_rgb565 or
-									a_other.pixel_format.is_argb2101010
-		do
-			make_from_image(a_other.image)
-		ensure
-			Surface_Make_is_open: has_error or is_open
-		end
-
-	make_for_window(a_window:GAME_WINDOW; a_width,a_height:INTEGER)
-			-- Create an empty `Current' of dimension `a_width' x `a_height'
-			-- conforming to `a_window'.
-		require
-			Surface_Make_Video_Enabled: game_library.is_video_enable
-			Is_Pixel_Format_Valid: 	a_window.pixel_format.is_argb8888 or
-									a_window.pixel_format.is_rgb565 or
-									a_window.pixel_format.is_argb2101010
-		do
-			make_for_pixel_format(a_window.pixel_format,a_width,a_height)
-		ensure
-			Surface_Make_is_open: has_error or is_open
-		end
-
-	make_for_display(a_display:GAME_DISPLAY; a_width,a_height:INTEGER)
-			-- Create an empty `Current' of dimension `a_width' x `a_height'
-			-- conforming to `a_display'.
-		require
-			Surface_Make_Video_Enabled: game_library.is_video_enable
-			Is_Pixel_Format_Valid: 	a_display.current_mode.pixel_format.is_argb8888 or
-									a_display.current_mode.pixel_format.is_rgb565 or
-									a_display.current_mode.Pixel_format.is_argb2101010
-		do
-			make_for_display_mode(a_display.current_mode,a_width,a_height)
-		ensure
-			Surface_Make_is_open: has_error or is_open
-		end
-
-	make(a_width,a_height:INTEGER)
-			-- Create an empty `Current' of dimension `a_width' x `a_height'
-			-- conforming to the first founded {GAME_DISPLAY}.
-		require
-			Surface_Make_Video_Enabled: game_library.is_video_enable
-		local
-			l_pixel_format:GAME_PIXEL_FORMAT
-		do
-			create l_pixel_format
-			l_pixel_format.set_argb8888
-			make_for_pixel_format(l_pixel_format, a_width, a_height)
-		ensure
-			Surface_Make_is_open: has_error or is_open
-		end
-
-	make_for_display_mode(a_display_mode:GAME_DISPLAY_MODE; a_width,a_height:INTEGER)
-			-- Create an empty `Current' of dimension `a_width' x `a_height'
-			-- conforming to `a_display_mode'.
-		require
-			Surface_Make_Video_Enabled: game_library.is_video_enable
-			Is_Pixel_Format_Valid: 	a_display_mode.pixel_format.is_argb8888 or
-									a_display_mode.pixel_format.is_rgb565 or
-									a_display_mode.pixel_format.is_argb2101010
-		do
-			make_for_pixel_format(a_display_mode.pixel_format,a_width,a_height)
-		ensure
-			Surface_Make_is_open: has_error or is_open
-		end
-
-	make_for_pixel_format(a_pixel_format: GAME_PIXEL_FORMAT_READABLE; a_width, a_height: INTEGER_32)
-			-- Create an empty `Current` of dimension `a_width` x `a_height`
-			-- conforming to `a_pixel_format`.
-		require
-			surface_make_video_enabled: Game_library.is_video_enable
-			Is_Pixel_Format_Valid: 	a_pixel_format.is_argb8888 or a_pixel_format.is_rgb565 or
-									a_pixel_format.is_argb2101010
-		do
-			make_surface_for_pixel_format (a_pixel_format, a_width, a_height)
-		ensure
-			surface_make_is_open: has_error or is_open
-		end
 
 	make_from_cairo_pixel_buffer(a_pixel_buffer:CAIRO_PIXEL_BUFFER)
 			-- Initialization of `Current' copying (and adapting) the data
