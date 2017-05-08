@@ -1,5 +1,6 @@
 note
 	description: "Exemple for using arcs."
+	source: "https://www.cairographics.org/samples/"
 	author: "Louis Marchand"
 	date: "Wed, 12 Apr 2017 14:57:01 +0000"
 	revision: "0.1"

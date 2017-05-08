@@ -4,5 +4,5 @@ EIFGENs
 *.lib
 *.pdf
 *.png
-!examples/png_load_save/source.png
+!source.png
 C_lib_win
