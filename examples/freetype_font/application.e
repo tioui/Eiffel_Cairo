@@ -7,7 +7,7 @@ note
 
 class
 	APPLICATION
-	
+
 create
 	make
 

@@ -13,6 +13,7 @@ class
 inherit
 	GAME_SURFACE
 	GAME_CAIRO_STREAMING
+	CAIRO_PREMULTIPLIER
 
 create
 	make,
@@ -46,8 +47,10 @@ feature {NONE} -- Initialization
 			l_pixels := pixels
 			premultiply_to_postmultiply(
 								a_pixel_buffer.item, l_pixels.item,
-								a_pixel_buffer.width, a_pixel_buffer.height,
-								a_pixel_buffer.stride, l_pixels.pitch
+								0, 0, a_pixel_buffer.width, a_pixel_buffer.height,
+								a_pixel_buffer.stride, l_pixels.pitch,
+								16, 8, 0, 24,
+								16, 8, 0, 24
 							)
 			unlock
 		end
@@ -79,7 +82,13 @@ feature -- Access
 				l_must_unlock := True
 			end
 			l_pixels := pixels
-			postmultiply_to_premultiply (l_pixels.item, Result.item, width, height, l_pixels.pitch, Result.stride)
+			postmultiply_to_premultiply (
+									l_pixels.item, Result.item,
+									0, 0, width, height,
+									l_pixels.pitch, Result.stride,
+									16, 8, 0, 24,
+									16, 8, 0, 24
+								)
 			if l_must_unlock then
 				unlock
 			end
@@ -93,91 +102,5 @@ feature -- Access
 			Pixel_Format_Valid: pixel_format.is_argb8888
 		do
 			create Result.make_with_pixel_buffer (translated_cairo_pixel_buffer)
-		end
-
-feature {NONE} -- Implementation
-
-	premultiply_to_postmultiply(
-							a_source, a_destination:POINTER;
-							a_width, a_height, a_source_pitch, a_destination_pitch:INTEGER
-						)
-			-- Since Cairo use premultiplied alpha value and the game library use
-			-- a postmultiplied alpha value, a transcription need to be made. This
-			-- copy the data (in premultiplied format) in `a_souce' to `a_destination'
-			-- (in postmultiplied format). The matrix of pixel is `a_width' x `a_height'
-			-- and the lenght of each line in `a_source' is `a_source_pitch' and in
-			-- `a_destination', it is `a_destination_pitch'.
-		external
-			"C inline use <stdint.h>"
-		alias
-			"[
-				uint32_t *l_source = (uint32_t *)$a_source;
-				uint32_t *l_destination = (uint32_t *)$a_destination;
-				int i, j;
-				uint32_t l_color, l_alpha, l_red, l_green, l_blue;
-				int l_source_pitch = $a_source_pitch / 4;
-				int l_destination_pitch = $a_destination_pitch / 4;
-				for(i=0; i < $a_height; i = i + 1)
-				{
-					for(j=0; j < $a_width; j = j + 1)
-					{
-						l_color = l_source[(i * l_source_pitch) + j];
-						l_alpha = (l_color >> 24) & 0xFF;
-						if (l_alpha != 0)
-						{
-							l_blue = l_color & 0xFF;
-							l_green = (l_color >> 8) & 0xFF;
-							l_red = (l_color >> 16) & 0xFF;
-							l_blue = (l_blue * 255) / l_alpha;
-							l_green = (l_green * 255) / l_alpha;
-							l_red = (l_red * 255) / l_alpha;
-							l_color = (l_alpha << 24) | (l_red << 16) | (l_green << 8) | l_blue;
-						}
-						l_destination[(i * l_destination_pitch) + j] = l_color;
-					}
-				}
-			]"
-		end
-
-	postmultiply_to_premultiply(
-							a_source, a_destination:POINTER;
-							a_width, a_height, a_source_pitch, a_destination_pitch:INTEGER
-						)
-			-- Since Cairo use premultiplied alpha value and the game library use
-			-- a postmultiplied alpha value, a transcription need to be made. This
-			-- copy the data (in postmultiplied format) in `a_souce' to `a_destination'
-			-- (in premultiplied format). The matrix of pixel is `a_width' x `a_height'
-			-- and the lenght of each line in `a_source' is `a_source_pitch' and in
-			-- `a_destination', it is `a_destination_pitch'.
-		external
-			"C inline use <stdint.h>"
-		alias
-			"[
-				uint32_t *l_source = (uint32_t *)$a_source;
-				uint32_t *l_destination = (uint32_t *)$a_destination;
-				int i, j;
-				uint32_t l_color, l_alpha, l_red, l_green, l_blue;
-				int l_source_pitch = $a_source_pitch / 4;
-				int l_destination_pitch = $a_destination_pitch / 4;
-				for(i=0; i < $a_height; i = i + 1)
-				{
-					for(j=0; j < $a_width; j = j + 1)
-					{
-						l_color = l_source[(i * l_source_pitch) + j];
-						l_alpha = (l_color >> 24) & 0xFF;
-						if (l_alpha != 0)
-						{
-							l_blue = l_color & 0xFF;
-							l_green = (l_color >> 8) & 0xFF;
-							l_red = (l_color >> 16) & 0xFF;
-							l_blue = (l_blue * l_alpha) / 255;
-							l_green = (l_green * l_alpha) / 255;
-							l_red = (l_red * l_alpha) / 255;
-							l_color = (l_alpha << 24) | (l_red << 16) | (l_green << 8) | l_blue;
-						}
-						l_destination[(i * l_destination_pitch) + j] = l_color;
-					}
-				}
-			]"
 		end
 end
