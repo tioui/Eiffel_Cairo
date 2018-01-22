@@ -19,6 +19,21 @@
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
 		<library name="eiffel_cairo" location="$ISE_LIBRARY\contrib\library\cairo\core\eiffel_cairo.ecf" readonly="false"/>
 		<library name="vision2" location="$ISE_LIBRARY\library\vision2\vision2.ecf"/>
-		<cluster name="eiffel_cairo_vision2" location=".\" recursive="false"/>
+		<cluster name="eiffel_cairo_vision2" location=".\" recursive="true">
+			<file_rule>
+				<exclude>/Windows$</exclude>
+				<condition>
+					<platform excluded_value="windows"/>
+				</condition>
+			</file_rule>
+			<file_rule>
+				<exclude>/Others$</exclude>
+				<condition>
+					<platform value="windows"/>
+				</condition>
+			</file_rule>
+		</cluster>
+		
+
 	</target>
 </system>
