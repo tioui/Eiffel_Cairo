@@ -40,7 +40,7 @@ feature {NONE} -- Initialization
 	make_shared(a_item:POINTER)
 			-- Initialization of `Current' using `a_item' as `item'
 		require
-			Item_Exists: not item.is_default_pointer
+			Item_Exists: not a_item.is_default_pointer
 		do
 			make(a_item)
 			is_shared := True

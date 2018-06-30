@@ -100,10 +100,10 @@ feature -- Status report
 			Result := count = 0
 		end
 
-	valid_index (i: INTEGER): BOOLEAN
+	valid_index (a_index: INTEGER): BOOLEAN
 			-- <Precursor>
 		do
-			Result := i >= 1 and i <= count
+			Result := a_index >= 1 and a_index <= count
 		end
 
 feature -- Measurement

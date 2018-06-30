@@ -68,7 +68,7 @@ feature -- Access
 		require
 			Is_Valid:is_valid
 		do
-			{CAIRO_EXTERNALS}.cairo_save(item)
+			{CAIRO_EXTERNALS}.cairo_restore(item)
 		end
 
 	push_group
@@ -341,7 +341,7 @@ feature -- Access
 			-- of the size specified by the single value in `a_dashes'
 		require
 			Is_Valid:is_valid
-			Dashes_Not_All_0: across a_dashes as la_dashes some la_dashes.item > 0 end
+			Dashes_Not_All_0: a_dashes.is_empty or across a_dashes as la_dashes some la_dashes.item > 0 end
 			Dashes_Not_Negative: not (across a_dashes as la_dashes some la_dashes.item < 0 end)
 		local
 			l_dashes_c:ANY

@@ -1373,7 +1373,7 @@ feature -- Functions
 			"cairo_glyph_free"
 		end
 
-	frozen cairo_text_cluster_allocate(num_clusters:INTEGER):POINTER
+	frozen cairo_text_cluster_allocate(a_num_clusters:INTEGER):POINTER
 		external
 			"C (int) : cairo_text_cluster_t * | <cairo.h>"
 		alias
@@ -1600,21 +1600,21 @@ feature -- Functions
 			"cairo_mesh_pattern_curve_to"
 		end
 
-	frozen cairo_mesh_pattern_set_control_point(a_pattern:POINTER; point_num:NATURAL; a_x, a_y:REAL_64)
+	frozen cairo_mesh_pattern_set_control_point(a_pattern:POINTER; a_point_num:NATURAL; a_x, a_y:REAL_64)
 		external
 			"C (cairo_pattern_t *, unsigned int, double, double) | <cairo.h>"
 		alias
 			"cairo_mesh_pattern_set_control_point"
 		end
 
-	frozen cairo_mesh_pattern_set_corner_color_rgb(a_pattern:POINTER; corner_num:NATURAL; a_red, a_green, a_blue:REAL_64)
+	frozen cairo_mesh_pattern_set_corner_color_rgb(a_pattern:POINTER; a_corner_num:NATURAL; a_red, a_green, a_blue:REAL_64)
 		external
 			"C (cairo_pattern_t *, unsigned int, double, double, double) | <cairo.h>"
 		alias
 			"cairo_mesh_pattern_set_corner_color_rgb"
 		end
 
-	frozen cairo_mesh_pattern_set_corner_color_rgba(a_pattern:POINTER; corner_num:NATURAL; a_red, a_green, a_blue, a_alpha:REAL_64)
+	frozen cairo_mesh_pattern_set_corner_color_rgba(a_pattern:POINTER; a_corner_num:NATURAL; a_red, a_green, a_blue, a_alpha:REAL_64)
 		external
 			"C (cairo_pattern_t *, unsigned int, double, double, double, double) | <cairo.h>"
 		alias
