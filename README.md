@@ -7,6 +7,29 @@ and PDF, SVG and Freetype drivers.
 
 You can also used this library with the Eiffel_Game2 library (see: https://github.com/tioui/Eiffel_Game2). 
 
+Installation on Windows
+-----------------------
+
+Download the precompile library: https://github.com/tioui/Eiffel_Cairo/raw/Windows_Build/Eiffel_Cairo.zip .
+
+Extract the "cairo" directory in the contrib\library sub-directory of the Eiffel directory.
+
+Put all .dll files of the C_libwin\DLLXX directory in the project directory.
+
+Installation on Linux
+---------------------
+
+Clone the repository so that the library is in the contrib\library sub-directory of the Eiffel directory.
+
+Install the Cairo library and headers using your package manager. On Debian/Ubuntu:
+
+***
+
+	sudo apt install libcairo2-dev
+
+***
+
+
 MIT License
 -----------
 Copyright © 2017 Louis Marchand
