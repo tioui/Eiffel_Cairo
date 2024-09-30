@@ -24,7 +24,7 @@
 				<platform value="windows"/>
 			</condition>
 		</external_include>
-		<external_cflag value="`freetype-config --cflags`">
+		<external_cflag value="`pkg-config --cflags freetype2`">
 			<condition>
 				<platform excluded_value="windows"/>
 			</condition>
@@ -84,7 +84,7 @@
 				<dotnet value="true"/>
 			</condition>
 		</external_object>
-		<external_linker_flag value="`freetype-config --libs`">
+		<external_linker_flag value="`pkg-config --libs freetype2`">
 			<condition>
 				<platform excluded_value="windows"/>
 			</condition>
